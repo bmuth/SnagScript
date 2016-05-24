@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnagScript", "SnagScript\SnagScript.csproj", "{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Debug|iPhone.Build.0 = Debug|iPhone
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Release|iPhone.ActiveCfg = Release|iPhone
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Release|iPhone.Build.0 = Release|iPhone
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{948B2DA3-EA50-48B2-B460-EBCCF4EF029B}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+EndGlobal
