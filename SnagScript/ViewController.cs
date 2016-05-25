@@ -17,7 +17,7 @@ namespace SnagScript
 
 	public partial class ViewController : UIViewController
 	{
-		static OptionData _OptionData = new OptionData {EmailAddress = "email address here", DoctorName = "Provider Name", CollegeNumber = "College No. here"};
+		static public OptionData _OptionData = new OptionData {EmailAddress = "email address here", DoctorName = "Provider Name", CollegeNumber = "College No. here"};
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -58,6 +58,27 @@ namespace SnagScript
 			base.DidReceiveMemoryWarning ();
 			// Release any cached data, images, etc that aren't in use.
 		}
+
+		partial void UIButton5_TouchUpInside (UIButton sender)
+		{
+			var storyboard = this.Storyboard;
+			var p = (OptionViewController)storyboard.InstantiateViewController ("OptionViewController");
+
+
+			p.OptionsUpdated += () => 
+			{
+				var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+				var filePath = Path.Combine (documentsPath, "SnagScript.xml");
+
+				XmlSerializer ser = new XmlSerializer (typeof (OptionData));	
+				using (TextWriter writer = new StreamWriter (filePath))
+				{
+					ser.Serialize (writer, _OptionData);
+					writer.Close ();
+				}
+			};
+
+			this.PresentViewController (p, true, null);		}
 	}
 }
 

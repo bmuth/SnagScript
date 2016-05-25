@@ -30,6 +30,10 @@ namespace SnagScript
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UILabel labProviderName { get; set; }
 
+		[Action ("UIButton5_TouchUpInside:")]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		partial void UIButton5_TouchUpInside (UIButton sender);
+
 		void ReleaseDesignerOutlets ()
 		{
 			if (labCollegeNo != null) {
