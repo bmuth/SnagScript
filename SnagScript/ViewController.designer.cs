@@ -1,17 +1,53 @@
-﻿//
-// This file has been generated automatically by MonoDevelop to store outlets and
-// actions made in the Xcode designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
+// WARNING
+//
+// This file has been generated automatically by Xamarin Studio from the outlets and
+// actions declared in your storyboard file.
+// Manual changes to this file will not be maintained.
 //
 using Foundation;
+using System;
+using System.CodeDom.Compiler;
+using UIKit;
 
 namespace SnagScript
 {
 	[Register ("ViewController")]
 	partial class ViewController
 	{
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labCollegeNo { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labMsg1 { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labMsg2 { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labProviderName { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (labCollegeNo != null) {
+				labCollegeNo.Dispose ();
+				labCollegeNo = null;
+			}
+			if (labMsg1 != null) {
+				labMsg1.Dispose ();
+				labMsg1 = null;
+			}
+			if (labMsg2 != null) {
+				labMsg2.Dispose ();
+				labMsg2 = null;
+			}
+			if (labProviderName != null) {
+				labProviderName.Dispose ();
+				labProviderName = null;
+			}
 		}
 	}
 }
