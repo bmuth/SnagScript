@@ -34,13 +34,13 @@ namespace SnagScript
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UITextField tbProviderName { get; set; }
 
+		[Action ("CancelButton_TouchUpInside:")]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		partial void CancelButton_TouchUpInside (UIButton sender);
+
 		[Action ("OkButton_TouchUpInside:")]
 		[GeneratedCode ("iOS Designer", "1.0")]
 		partial void OkButton_TouchUpInside (UIButton sender);
-
-		[Action ("TextFieldChanged:")]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		partial void TextFieldChanged (UITextField sender);
 
 		void ReleaseDesignerOutlets ()
 		{

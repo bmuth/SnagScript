@@ -42,11 +42,13 @@ namespace SnagScript
 
 			try
 			{
-				FileStream fs = new FileStream (filePath, FileMode.Open);
-				XmlReader reader = XmlReader.Create (fs);
+				using (FileStream fs = new FileStream (filePath, FileMode.Open))
+				{
+					XmlReader reader = XmlReader.Create (fs);
 
-				// Use the Deserialize method to restore the object's state.
-				_OptionData = (OptionData) serializer.Deserialize (reader);
+					// Use the Deserialize method to restore the object's state.
+					_OptionData = (OptionData) serializer.Deserialize (reader);
+				}
 			}
 			catch (Exception e) {
 				Console.WriteLine ("Failed to load SnagScript.xml. {0}", e.Message);
@@ -76,6 +78,9 @@ namespace SnagScript
 					ser.Serialize (writer, _OptionData);
 					writer.Close ();
 				}
+
+				labProviderName.Text = _OptionData.DoctorName;
+				labCollegeNo.Text = _OptionData.CollegeNumber;
 			};
 
 			this.PresentViewController (p, true, null);		}

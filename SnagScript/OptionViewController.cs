@@ -7,8 +7,6 @@ namespace SnagScript
 {
 	partial class OptionViewController : UIViewController
 	{
-		bool bChanged = false;
-
 		public delegate void OptionsUpdatedHandler ();
 		public event OptionsUpdatedHandler OptionsUpdated;
 
@@ -25,6 +23,18 @@ namespace SnagScript
 			tbEmailAddress.Text = ViewController._OptionData.EmailAddress;
 
 			tbProviderName.BecomeFirstResponder ();
+
+			tbProviderName.EditingDidEndOnExit += (object sender, EventArgs e) => 
+			{
+				tbProviderName.ResignFirstResponder ();
+			};
+			tbCollegeNo.EditingDidEndOnExit += (object sender, EventArgs e) => {
+				tbCollegeNo.ResignFirstResponder ();
+			};
+			tbEmailAddress.EditingDidEndOnExit += (object sender, EventArgs e) => {
+				tbEmailAddress.ResignFirstResponder ();
+			};
+
 		}
 
 		/****************************************
@@ -35,27 +45,25 @@ namespace SnagScript
 
 		partial void OkButton_TouchUpInside (UIButton sender)
 		{
-			if (bChanged)
-			{
-				ViewController._OptionData.DoctorName = tbProviderName.Text;
-				ViewController._OptionData.CollegeNumber = tbCollegeNo.Text;
-				ViewController._OptionData.EmailAddress = tbEmailAddress.Text;
+			ViewController._OptionData.DoctorName = tbProviderName.Text;
+			ViewController._OptionData.CollegeNumber = tbCollegeNo.Text;
+			ViewController._OptionData.EmailAddress = tbEmailAddress.Text;
 
-				OptionsUpdated ();
-			}
+			OptionsUpdated ();
 
 			this.DismissViewControllerAsync (true);
 		}
 
-		/****************************************
+		/***************************************
 		 * 
-		 * TextFieldChanged
+		 * Cancel button pressed
 		 * 
-		 * *************************************/
+		 * ************************************/
 
-		partial void TextFieldChanged (UITextField sender)
+		partial void CancelButton_TouchUpInside (UIButton sender)
 		{
-			bChanged = true;
+			this.DismissViewControllerAsync (true);
 		}
+
 	}
 }
