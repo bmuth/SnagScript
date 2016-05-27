@@ -19,9 +19,141 @@ namespace SnagScript
 	{
 		static public OptionData _OptionData = new OptionData {EmailAddress = "email address here", DoctorName = "Provider Name", CollegeNumber = "College No. here"};
 
+		const double fHeightWidthRatioPatient = 78.0 / 183.0;
+		const double fHeightWidthRatioMeds = 244.0 / 274.0;
+
 		public ViewController (IntPtr handle) : base (handle)
 		{
 		}
+
+		public override bool ShouldAutorotate ()
+		{
+			return true;
+		}
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
+		{
+			return UIInterfaceOrientationMask.Portrait;
+		}
+
+		/****************************
+		 * WireUpPatientTap
+		 * *************************/
+
+		private void WireUpPatientTap ()
+		{
+			UITapGestureRecognizer DoubleTapGesture = null;
+			UITapGestureRecognizer SingleTapGesture = null;
+
+			{
+				DoubleTapGesture = new UITapGestureRecognizer (() => {
+					var storyboard = this.Storyboard;
+					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
+					p.fHeightWidthRatio = fHeightWidthRatioPatient;
+
+					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+					p.PhotoUpdated += (UIImage image) => {
+						{
+							imagePatient.Image = image;
+						}
+					};
+
+					this.PresentViewController (p, true, null);
+				});
+				DoubleTapGesture.NumberOfTapsRequired = 2;
+				imagePatient.AddGestureRecognizer (DoubleTapGesture);			
+			}
+
+	/*		{
+				SingleTapGesture = new UITapGestureRecognizer (() => {
+					var storyboard = this.Storyboard;
+					var p = (EditPhotoViewController)storyboard.InstantiateViewController ("EditPhotoViewController");
+					p.fHeightWidthRatio = fHeightWidthRatioPatient;
+
+					if (imagePatient.Image != null)
+					{
+						p.ImageForEditing = imagePatient.Image;
+
+						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+						p.PhotoUpdated += (UIImage image) => {
+							{
+								imagePatient.Image = image;
+							}
+						};
+
+						this.PresentViewController (p, true, null);
+					}
+				});
+				SingleTapGesture.NumberOfTapsRequired = 1;
+				SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
+				imagePatient.AddGestureRecognizer (SingleTapGesture);
+			}*/
+		}
+
+		/***************************
+		 * WireUpMedsTap
+		 * ************************/
+
+		private void WireUpMedsTap ()
+		{
+			UITapGestureRecognizer DoubleTapGesture = null;
+			UITapGestureRecognizer SingleTapGesture = null;
+
+			{
+				DoubleTapGesture = new UITapGestureRecognizer (() => {
+					var storyboard = this.Storyboard;
+					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
+					p.fHeightWidthRatio = fHeightWidthRatioMeds;
+
+					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+					p.PhotoUpdated += (UIImage image) => {
+						{
+							imageMeds.Image = image;
+						}
+					};
+
+					this.PresentViewController (p, true, null);
+				});
+				DoubleTapGesture.NumberOfTapsRequired = 2;
+				imageMeds.AddGestureRecognizer (DoubleTapGesture);			
+			}
+
+	/*		{
+				SingleTapGesture = new UITapGestureRecognizer (() => {
+					var storyboard = this.Storyboard;
+					var p = (EditPhotoViewController)storyboard.InstantiateViewController ("EditPhotoViewController");
+					p.fHeightWidthRatio = fHeightWidthRatioMeds;
+
+					if (imageMeds.Image != null)
+					{
+						p.ImageForEditing = imageMeds.Image;
+
+						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+						p.PhotoUpdated += (UIImage image) => {
+							{
+								imageMeds.Image = image;
+								labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
+							}
+						};
+
+						this.PresentViewController (p, true, null);
+					}
+				});
+				SingleTapGesture.NumberOfTapsRequired = 1;
+				SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
+				imageMeds.AddGestureRecognizer (SingleTapGesture);
+			}*/
+		}
+
+		/***************************************
+		 * 
+		 * ViewDidLoad ()
+		 * 
+		 * ************************************/
 
 		public override void ViewDidLoad ()
 		{
@@ -31,7 +163,16 @@ namespace SnagScript
 
 			labCollegeNo.Text = _OptionData.CollegeNumber;
 			labProviderName.Text = _OptionData.DoctorName;
+
+			WireUpPatientTap ();
+			WireUpMedsTap ();
 		}
+
+		/************************************************
+		 * 
+		 * LoadPersistData ()
+		 * 
+		 * *********************************************/
 
 		private void LoadPersistedData ()
 		{
@@ -61,6 +202,12 @@ namespace SnagScript
 			// Release any cached data, images, etc that aren't in use.
 		}
 
+		/*******************************************
+	 	* 
+	 	* Options Button pressed
+	 	* 
+	 	* *****************************************/
+
 		partial void UIButton5_TouchUpInside (UIButton sender)
 		{
 			var storyboard = this.Storyboard;
@@ -83,7 +230,8 @@ namespace SnagScript
 				labCollegeNo.Text = _OptionData.CollegeNumber;
 			};
 
-			this.PresentViewController (p, true, null);		}
+			this.PresentViewController (p, true, null);	
+		}
 	}
 }
 

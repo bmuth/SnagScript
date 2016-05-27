@@ -16,7 +16,19 @@ namespace SnagScript
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
+		UIImageView imageMeds { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIImageView imagePatient { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
 		UILabel labCollegeNo { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labDate { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -36,9 +48,21 @@ namespace SnagScript
 
 		void ReleaseDesignerOutlets ()
 		{
+			if (imageMeds != null) {
+				imageMeds.Dispose ();
+				imageMeds = null;
+			}
+			if (imagePatient != null) {
+				imagePatient.Dispose ();
+				imagePatient = null;
+			}
 			if (labCollegeNo != null) {
 				labCollegeNo.Dispose ();
 				labCollegeNo = null;
+			}
+			if (labDate != null) {
+				labDate.Dispose ();
+				labDate = null;
 			}
 			if (labMsg1 != null) {
 				labMsg1.Dispose ();

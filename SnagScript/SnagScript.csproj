@@ -103,6 +103,10 @@
     <Compile Include="OptionViewController.designer.cs">
       <DependentUpon>OptionViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="SnapshotViewController.cs" />
+    <Compile Include="SnapshotViewController.designer.cs">
+      <DependentUpon>SnapshotViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -119,11 +123,11 @@
     <BundleResource Include="Resources\CropOff.png" />
     <BundleResource Include="Resources\FlashOn.png" />
     <BundleResource Include="Resources\FlashOff.png" />
-    <BundleResource Include="Resources\TakePhotoButton.png" />
     <BundleResource Include="Resources\FlashButton.png" />
     <BundleResource Include="Resources\NoFlashButton.png" />
     <BundleResource Include="Resources\email.png" />
     <BundleResource Include="Resources\options.png" />
     <BundleResource Include="Resources\Cancel.png" />
+    <BundleResource Include="Resources\TakePhoto.png" />
   </ItemGroup>
 </Project>
