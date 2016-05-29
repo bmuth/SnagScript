@@ -84,17 +84,6 @@ namespace SnagScript
 			if (imagePatient.Image != null)
 			{
 				ShowPatientCallout ();
-				/*						p.ImageForEditing = imagePatient.Image;
-
-					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
-
-					p.PhotoUpdated += (UIImage image) => {
-						{
-							imagePatient.Image = image;
-						}
-					};
-
-					this.PresentViewController (p, true, null);*/
 			}
 			else
 			{
@@ -105,6 +94,8 @@ namespace SnagScript
 						imagePatientOriginal = image;
 						imagePatient.Image = image;
 						labTipPatientID.Hidden = true;
+						bIfContrastPatient = false;
+						Console.WriteLine ("Contrast false");
 					}
 				};
 
@@ -119,6 +110,15 @@ namespace SnagScript
 
 		private void ShowPatientCallout ()
 		{
+			if (!bIfContrastPatient)
+			{
+				PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
+			}
+			else
+			{
+				PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
+			}
+
 			PatientCalloutView.Hidden = false;
 			PatientCalloutView.AddGestureRecognizer (SingleTapPatientCalloutGesture);
 		}
@@ -199,16 +199,7 @@ namespace SnagScript
 
 			labCollegeNo.Text = _OptionData.CollegeNumber;
 			labProviderName.Text = _OptionData.DoctorName;
-		}
 
-		/************************************************
-		 * 
-		 * ViewDidLayoutSubviews
-		 * 
-		 * *********************************************/
-
-		public override void ViewDidLayoutSubviews()
-		{
 			base.ViewDidLayoutSubviews();
 
 			WireUpPatientTap ();
@@ -223,11 +214,13 @@ namespace SnagScript
 					Console.WriteLine ("Contrast");
 					if (!bIfContrastPatient)
 					{
-						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);   
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
+						imagePatient.Image = imagePatientEnhanced;
 					}
 					else
 					{
 						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
+						imagePatient.Image = imagePatientOriginal;
 					}
 					bIfContrastPatient = !bIfContrastPatient;
 				}
@@ -244,6 +237,9 @@ namespace SnagScript
 						imagePatientEnhanced = image;
 						imagePatient.Image = image;
 						bIfContrastPatient = true;
+						Console.WriteLine ("Contrast now true");
+
+						HidePatientCallout ();
 					};
 
 					this.PresentViewController (p, true, null);	
@@ -253,22 +249,23 @@ namespace SnagScript
 				{
 					Console.WriteLine ("Camera");
 					HidePatientCallout ();
+					imagePatientEnhanced.Dispose ();
+					imagePatientOriginal.Dispose ();
+					imagePatientEnhanced = null;
+					imagePatientOriginal = null;
+					imagePatient.Image.Dispose ();
+					imagePatient.Image = null;
+
 					TakePhotoPatientID ();
-				}
-					
-				if (PatientCalloutView.Bounds.Contains (pt))
-				{
-					Console.WriteLine ("point is contained in PatientCallout");
-				}
-				else
-				{
-					//HidePatientCallout ();
 				}
 			});
 
 			PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);      
-			;
+			bIfContrastPatient = false;
+			Console.WriteLine ("contrast now false");
+
 		}
+
 		/************************************************
 		 * 
 		 * LoadPersistData ()
