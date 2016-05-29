@@ -18,30 +18,30 @@ using CoreGraphics;
 
 namespace SnagScript
 {
-    [Register ("Bubble1")]
-    public class Bubble1 : NSObject
+    public class PatientIDCallout : NSObject
     {
 
         //// Cache
 
         private static UIImage imageOfPatientCallout;
-        private static NSObject[] patientCalloutTargets;
 
         //// Initialization
 
-        static Bubble1()
+        static PatientIDCallout()
         {
         }
 
         //// Drawing Methods
 
-        public static void DrawPatientCallout()
+        public static void DrawPatientCallout(UIColor contrastFill)
         {
             //// Color Declarations
             var backgroundCallout = UIColor.FromRGBA(0.918f, 1.000f, 0.240f, 1.000f);
             var cameraLine = UIColor.FromRGBA(0.000f, 0.000f, 0.000f, 1.000f);
             var cameraInterior = UIColor.FromRGBA(1.000f, 1.000f, 1.000f, 1.000f);
             var whiteLens = UIColor.FromRGBA(1.000f, 1.000f, 1.000f, 1.000f);
+            var contrastBlue = UIColor.FromRGBA(0.000f, 0.235f, 1.000f, 0.617f);
+			contrastBlue = contrastFill;
 
             //// Bezier 6 Drawing
             UIBezierPath bezier6Path = new UIBezierPath();
@@ -156,7 +156,7 @@ namespace SnagScript
             oval4Path.AddCurveToPoint(new CGPoint(41.5f, 92.0f), new CGPoint(41.5f, 96.7f), new CGPoint(41.5f, 92.0f));
             oval4Path.AddCurveToPoint(new CGPoint(52.0f, 102.5f), new CGPoint(47.3f, 92.0f), new CGPoint(52.0f, 96.7f));
             oval4Path.ClosePath();
-            cameraLine.SetFill();
+            contrastBlue.SetFill();
             oval4Path.Fill();
 
 
@@ -186,38 +186,15 @@ namespace SnagScript
 
         //// Generated Images
 
-        public static UIImage ImageOfPatientCallout
+		public static UIImage ImageOfPatientCallout (UIColor clr)
         {
-            get
-            {
-                if (imageOfPatientCallout != null)
-                    return imageOfPatientCallout;
+			UIGraphics.BeginImageContextWithOptions(new CGSize(188.0f, 138.0f), false, 0);
+                            PatientIDCallout.DrawPatientCallout(clr);
 
-                UIGraphics.BeginImageContextWithOptions(new CGSize(188.0f, 138.0f), false, 0);
-                                Bubble1.DrawPatientCallout();
+            imageOfPatientCallout = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
 
-                imageOfPatientCallout = UIGraphics.GetImageFromCurrentImageContext();
-                UIGraphics.EndImageContext();
-
-                return imageOfPatientCallout;
-            }
-        }
-
-        //// Customization Infrastructure
-
-        [Outlet]
-        public NSObject[] PatientCalloutTargets
-        {
-            get { return patientCalloutTargets; }
-            set
-            {
-                patientCalloutTargets = value;
-                foreach (NSObject target in value)
-                {
-                    target.PerformSelector(new ObjCRuntime.Selector("setImage:"), ImageOfPatientCallout, 0);
-                }
-            }
-        }
-
+            return imageOfPatientCallout;
+ 		}
     }
 }

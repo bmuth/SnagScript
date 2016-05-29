@@ -29,6 +29,10 @@ namespace SnagScript
 		const double fHeightWidthRatioPatient = 78.0 / 183.0;
 		const double fHeightWidthRatioMeds = 244.0 / 274.0;
 
+		private UIColor contrastBlue = UIColor.FromRGBA (0.000f, 0.235f, 1.000f, 0.617f);
+		private bool bIfContrastPatient = false;
+		private bool bIfContrastMeds = false;
+
 		public ViewController (IntPtr handle) : base (handle)
 		{
 		}
@@ -55,14 +59,30 @@ namespace SnagScript
 					HidePatientCallout ();
 					return;
 				}
-				var storyboard = this.Storyboard;
-				var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
-				p.fHeightWidthRatio = fHeightWidthRatioPatient;
 
-				if (imagePatient.Image != null)
-				{
-					ShowPatientCallout ();
-/*						p.ImageForEditing = imagePatient.Image;
+				TakePhotoPatientID ();
+			});
+
+			SingleTapPatientImageGesture.NumberOfTapsRequired = 1;
+			imagePatient.AddGestureRecognizer (SingleTapPatientImageGesture);
+		}
+
+		/**********************************
+		 * 
+		 * TakePhotoPatientID
+		 * 
+		 * *******************************/
+
+		private void TakePhotoPatientID ()
+		{
+			var storyboard = this.Storyboard;
+			var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
+			p.fHeightWidthRatio = fHeightWidthRatioPatient;
+
+			if (imagePatient.Image != null)
+			{
+				ShowPatientCallout ();
+				/*						p.ImageForEditing = imagePatient.Image;
 
 					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
@@ -73,27 +93,21 @@ namespace SnagScript
 					};
 
 					this.PresentViewController (p, true, null);*/
-				}
-				else
-				{
-					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+			}
+			else
+			{
+				p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
-					p.PhotoUpdated += (UIImage image) => {
-						{
-							imagePatient.Image = image;
-							labTipPatientID.Hidden = true;
-						}
-					};
+				p.PhotoUpdated += (UIImage image) => {
+					{
+						imagePatient.Image = image;
+						labTipPatientID.Hidden = true;
+					}
+				};
 
-					this.PresentViewController (p, true, null);
-				}
-
-			});
-
-			SingleTapPatientImageGesture.NumberOfTapsRequired = 1;
-			imagePatient.AddGestureRecognizer (SingleTapPatientImageGesture);
+				this.PresentViewController (p, true, null);
+			}
 		}
-
 		/*******************************************
 		 * 
 		 * ShowPatientCallout
@@ -130,6 +144,7 @@ namespace SnagScript
 					HidePatientCallout ();
 					return;
 				}
+					
 				var storyboard = this.Storyboard;
 				var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
 				p.fHeightWidthRatio = fHeightWidthRatioMeds;
@@ -203,6 +218,15 @@ namespace SnagScript
 				if (pt.X < PatientCalloutView.Bounds.Width / 3)
 				{
 					Console.WriteLine ("Contrast");
+					if (!bIfContrastPatient)
+					{
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);   
+					}
+					else
+					{
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
+					}
+					bIfContrastPatient = !bIfContrastPatient;
 				}
 				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
 				{
@@ -211,6 +235,8 @@ namespace SnagScript
 				else
 				{
 					Console.WriteLine ("Camera");
+					HidePatientCallout ();
+					TakePhotoPatientID ();
 				}
 					
 				if (PatientCalloutView.Bounds.Contains (pt))
@@ -223,7 +249,8 @@ namespace SnagScript
 				}
 			});
 
-			PatientCalloutView.Image = Bubble1.ImageOfPatientCallout;
+			PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);      
+			;
 		}
 		/************************************************
 		 * 
