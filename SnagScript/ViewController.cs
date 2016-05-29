@@ -42,10 +42,10 @@ namespace SnagScript
 
 		private void WireUpPatientTap ()
 		{
-			UITapGestureRecognizer DoubleTapGesture = null;
+			//UITapGestureRecognizer DoubleTapGesture = null;
 			UITapGestureRecognizer SingleTapGesture = null;
 
-			{
+	/*		{
 				DoubleTapGesture = new UITapGestureRecognizer (() => {
 					var storyboard = this.Storyboard;
 					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
@@ -63,17 +63,18 @@ namespace SnagScript
 				});
 				DoubleTapGesture.NumberOfTapsRequired = 2;
 				imagePatient.AddGestureRecognizer (DoubleTapGesture);			
-			}
+			}*/
 
-	/*		{
+			{
 				SingleTapGesture = new UITapGestureRecognizer (() => {
 					var storyboard = this.Storyboard;
-					var p = (EditPhotoViewController)storyboard.InstantiateViewController ("EditPhotoViewController");
+					var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
 					p.fHeightWidthRatio = fHeightWidthRatioPatient;
 
 					if (imagePatient.Image != null)
 					{
-						p.ImageForEditing = imagePatient.Image;
+						DrawCallout ();
+/*						p.ImageForEditing = imagePatient.Image;
 
 						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
@@ -83,25 +84,45 @@ namespace SnagScript
 							}
 						};
 
+						this.PresentViewController (p, true, null);*/
+					}
+					else
+					{
+						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+						p.PhotoUpdated += (UIImage image) => {
+							{
+								imagePatient.Image = image;
+								labTipPatientID.Hidden = true;
+							}
+						};
+
 						this.PresentViewController (p, true, null);
 					}
+
 				});
+
 				SingleTapGesture.NumberOfTapsRequired = 1;
-				SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
+				//SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
 				imagePatient.AddGestureRecognizer (SingleTapGesture);
-			}*/
+			}
 		}
 
+		private void DrawCallout ()
+		{
+			//CallView.Image = Bubble1.ImageOfCanvas1;
+
+		}
 		/***************************
 		 * WireUpMedsTap
 		 * ************************/
 
 		private void WireUpMedsTap ()
 		{
-			UITapGestureRecognizer DoubleTapGesture = null;
+			//UITapGestureRecognizer DoubleTapGesture = null;
 			UITapGestureRecognizer SingleTapGesture = null;
 
-			{
+/*			{
 				DoubleTapGesture = new UITapGestureRecognizer (() => {
 					var storyboard = this.Storyboard;
 					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
@@ -119,17 +140,17 @@ namespace SnagScript
 				});
 				DoubleTapGesture.NumberOfTapsRequired = 2;
 				imageMeds.AddGestureRecognizer (DoubleTapGesture);			
-			}
+			}*/
 
-	/*		{
+			{
 				SingleTapGesture = new UITapGestureRecognizer (() => {
 					var storyboard = this.Storyboard;
-					var p = (EditPhotoViewController)storyboard.InstantiateViewController ("EditPhotoViewController");
+					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
 					p.fHeightWidthRatio = fHeightWidthRatioMeds;
 
 					if (imageMeds.Image != null)
 					{
-						p.ImageForEditing = imageMeds.Image;
+/*						p.ImageForEditing = imageMeds.Image;
 
 						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
@@ -140,13 +161,26 @@ namespace SnagScript
 							}
 						};
 
-						this.PresentViewController (p, true, null);
+						this.PresentViewController (p, true, null);*/
 					}
+					else
+					{
+						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+						p.PhotoUpdated += (UIImage image) => {
+							{
+								imageMeds.Image = image;
+								labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
+								labTipMed.Hidden = true;
+							}
+						};
+
+						this.PresentViewController (p, true, null);					}
 				});
 				SingleTapGesture.NumberOfTapsRequired = 1;
-				SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
+				//SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
 				imageMeds.AddGestureRecognizer (SingleTapGesture);
-			}*/
+			}
 		}
 
 		/***************************************
@@ -166,6 +200,7 @@ namespace SnagScript
 
 			WireUpPatientTap ();
 			WireUpMedsTap ();
+			DrawCallout ();
 		}
 
 		/************************************************
@@ -208,7 +243,7 @@ namespace SnagScript
 	 	* 
 	 	* *****************************************/
 
-		partial void UIButton5_TouchUpInside (UIButton sender)
+		partial void ButtonOptions_TouchUpInside (UIButton sender)
 		{
 			var storyboard = this.Storyboard;
 			var p = (OptionViewController)storyboard.InstantiateViewController ("OptionViewController");

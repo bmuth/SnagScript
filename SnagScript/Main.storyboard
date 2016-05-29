@@ -19,55 +19,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="PrescriptionTemplate3.png" translatesAutoresizingMaskIntoConstraints="NO" id="3">
                                 <rect key="frame" x="14" y="32" width="160" height="240"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                                <rect key="frame" x="80" y="553" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="32" id="18"/>
-                                    <constraint firstAttribute="height" constant="32" id="19"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="email.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="18"/>
-                                        <exclude reference="19"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="18"/>
-                                        <include reference="19"/>
-                                    </mask>
-                                    <rect key="frame" x="80" y="553" width="32" height="32"/>
-                                </variation>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                                <rect key="frame" x="273" y="554" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="21"/>
-                                    <constraint firstAttribute="width" constant="32" id="22"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="options.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="21"/>
-                                        <exclude reference="22"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="21"/>
-                                        <include reference="22"/>
-                                    </mask>
-                                    <rect key="frame" x="273" y="554" width="32" height="32"/>
-                                </variation>
-                                <connections>
-                                    <action selector="UIButton5_TouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="320"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Signature ______________________" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="52">
                                 <rect key="frame" x="44" y="506" width="42" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -140,7 +91,7 @@
                                     <rect key="frame" x="178" y="461" width="109" height="21"/>
                                 </variation>
                             </label>
-                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="363" multipleTouchEnabled="YES">
+                            <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="363" multipleTouchEnabled="YES">
                                 <rect key="frame" x="93" y="-28" width="160" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="78" id="370"/>
@@ -160,7 +111,7 @@
                                     <rect key="frame" x="103" y="51" width="183" height="78"/>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="364">
+                            <imageView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="364" multipleTouchEnabled="YES">
                                 <rect key="frame" x="78" y="361" width="160" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="244" id="373"/>
@@ -180,7 +131,7 @@
                                     <rect key="frame" x="20" y="172" width="274" height="244"/>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Double-tap for Paitient ID Snapshot" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="131">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap for Patient ID Snapshot" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="131">
                                 <rect key="frame" x="158" y="84" width="42" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -204,7 +155,7 @@
                                     <rect key="frame" x="120" y="57" width="149" height="66"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Double-tap for Medication List Snapshot" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="132">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap for Medication List Snapshot" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="132">
                                 <rect key="frame" x="158" y="84" width="42" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -252,13 +203,58 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="584" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="55" y="518" width="46" height="30"/>
+                                <state key="normal" backgroundImage="email.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="64" y="512" width="48" height="48"/>
+                                    <mask key="constraints">
+                                        <include reference="586"/>
+                                        <include reference="587"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="586" firstItem="584" firstAttribute="height" constant="48"/>
+                                    <constraint id="587" firstItem="584" firstAttribute="width" constant="48"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="586"/>
+                                        <exclude reference="587"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="585" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="55" y="518" width="46" height="30"/>
+                                <state key="normal" backgroundImage="options.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="195" y="512" width="48" height="48"/>
+                                    <mask key="constraints">
+                                        <include reference="591"/>
+                                        <include reference="592"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="591" firstItem="585" firstAttribute="height" constant="48"/>
+                                    <constraint id="592" firstItem="585" firstAttribute="width" constant="48"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="591"/>
+                                        <exclude reference="592"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="ButtonOptions_TouchUpInside:" destination="BYZ-38-t0r" id="594" eventType="touchUpInside"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" constant="15" id="17"/>
-                            <constraint firstItem="4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="80" id="20"/>
-                            <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="95" id="23"/>
-                            <constraint firstAttribute="bottom" secondItem="5" secondAttribute="bottom" constant="14" id="24"/>
                             <constraint firstItem="52" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="12" id="103"/>
                             <constraint firstItem="3" firstAttribute="bottom" secondItem="52" secondAttribute="bottom" constant="16" id="106"/>
                             <constraint firstItem="3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="12" id="108"/>
@@ -279,12 +275,14 @@
                             <constraint firstItem="3" firstAttribute="trailing" secondItem="132" secondAttribute="trailing" constant="85" id="384"/>
                             <constraint firstItem="385" firstAttribute="top" secondItem="3" secondAttribute="top" constant="111" id="388"/>
                             <constraint firstItem="3" firstAttribute="trailing" secondItem="385" secondAttribute="trailing" constant="22" id="389"/>
+                            <constraint id="588" firstItem="8bC-Xf-vdC" firstAttribute="centerX" secondItem="584" secondAttribute="centerX" constant="72"/>
+                            <constraint id="589" firstItem="8bC-Xf-vdC" firstAttribute="bottom" secondItem="584" secondAttribute="bottom" constant="8"/>
+                            <constraint id="590" firstItem="585" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="59"/>
+                            <constraint id="593" firstItem="8bC-Xf-vdC" firstAttribute="bottom" secondItem="585" secondAttribute="bottom" constant="8"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="3"/>
-                                <exclude reference="4"/>
-                                <exclude reference="5"/>
                                 <exclude reference="52"/>
                                 <exclude reference="53"/>
                                 <exclude reference="118"/>
@@ -293,6 +291,8 @@
                                 <exclude reference="131"/>
                                 <exclude reference="132"/>
                                 <exclude reference="385"/>
+                                <exclude reference="584"/>
+                                <exclude reference="585"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="380"/>
@@ -314,26 +314,18 @@
                                 <exclude reference="389"/>
                                 <exclude reference="388"/>
                                 <exclude reference="103"/>
-                                <exclude reference="17"/>
-                                <exclude reference="20"/>
                                 <exclude reference="376"/>
-                                <exclude reference="23"/>
-                                <exclude reference="24"/>
+                                <exclude reference="588"/>
+                                <exclude reference="589"/>
+                                <exclude reference="590"/>
+                                <exclude reference="593"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="3"/>
-                                <include reference="4"/>
-                                <include reference="5"/>
                                 <include reference="52"/>
                                 <include reference="53"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="17"/>
-                                <include reference="20"/>
-                                <include reference="23"/>
-                                <include reference="24"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -344,6 +336,8 @@
                                 <include reference="131"/>
                                 <include reference="132"/>
                                 <include reference="385"/>
+                                <include reference="584"/>
+                                <include reference="585"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="380"/>
@@ -366,6 +360,10 @@
                                 <include reference="388"/>
                                 <include reference="103"/>
                                 <include reference="376"/>
+                                <include reference="588"/>
+                                <include reference="589"/>
+                                <include reference="590"/>
+                                <include reference="593"/>
                             </mask>
                         </variation>
                     </view>
@@ -374,9 +372,11 @@
                         <outlet property="imagePatient" destination="363" id="name-outlet-363"/>
                         <outlet property="labCollegeNo" destination="118" id="name-outlet-118"/>
                         <outlet property="labDate" destination="385" id="name-outlet-385"/>
-                        <outlet property="labMsg1" destination="131" id="name-outlet-131"/>
-                        <outlet property="labMsg2" destination="132" id="name-outlet-132"/>
+                        <outlet property="labTipPatientID" destination="131" id="name-outlet-131"/>
+                        <outlet property="labTipMed" destination="132" id="name-outlet-132"/>
                         <outlet property="labProviderName" destination="53" id="name-outlet-53"/>
+                        <outlet property="buttonEmail" destination="584" id="name-outlet-584"/>
+                        <outlet property="buttonOptions" destination="585" id="name-outlet-585"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -694,7 +694,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="212" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="742" y="279"/>
+            <point key="canvasLocation" x="766" y="158"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="448">
@@ -705,7 +705,7 @@
                         <viewControllerLayoutGuide type="bottom" id="447"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="450">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <subviews>
@@ -717,7 +717,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="454" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="137" y="518" width="46" height="30"/>
-                                <state key="normal" title="Button" backgroundImage="TakePhoto.png">
+                                <state key="normal" backgroundImage="TakePhoto.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -764,12 +764,36 @@
                                     <action selector="CancelButton_TouchUpInside:" destination="449" id="482" eventType="touchUpInside"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="494" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="38" y="501" width="46" height="30"/>
+                                <state key="normal" backgroundImage="FlashOff.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="38" y="501" width="32" height="32"/>
+                                    <mask key="constraints">
+                                        <include reference="531"/>
+                                        <include reference="532"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="531" firstItem="494" firstAttribute="height" constant="32"/>
+                                    <constraint id="532" firstItem="494" firstAttribute="width" constant="32"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="531"/>
+                                        <exclude reference="532"/>
+                                    </mask>
+                                </variation>
+                            </button>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="453"/>
                                 <exclude reference="454"/>
                                 <exclude reference="455"/>
+                                <exclude reference="494"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="467"/>
@@ -780,6 +804,8 @@
                                 <exclude reference="473"/>
                                 <exclude reference="474"/>
                                 <exclude reference="475"/>
+                                <exclude reference="533"/>
+                                <exclude reference="534"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -787,6 +813,7 @@
                                 <include reference="453"/>
                                 <include reference="454"/>
                                 <include reference="455"/>
+                                <include reference="494"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="467"/>
@@ -797,6 +824,8 @@
                                 <include reference="473"/>
                                 <include reference="474"/>
                                 <include reference="475"/>
+                                <include reference="533"/>
+                                <include reference="534"/>
                             </mask>
                         </variation>
                         <constraints>
@@ -808,12 +837,15 @@
                             <constraint id="473" firstItem="453" firstAttribute="bottom" secondItem="454" secondAttribute="bottom" constant="20"/>
                             <constraint id="474" firstItem="453" firstAttribute="trailing" secondItem="455" secondAttribute="trailing" constant="61"/>
                             <constraint id="475" firstItem="453" firstAttribute="bottom" secondItem="455" secondAttribute="bottom" constant="40"/>
+                            <constraint id="533" firstItem="453" firstAttribute="bottom" secondItem="494" secondAttribute="bottom" constant="35"/>
+                            <constraint id="534" firstItem="494" firstAttribute="leading" secondItem="453" secondAttribute="leading" constant="38"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="LiveCameraStream" destination="453" id="name-outlet-453"/>
-                        <outlet property="TakePhoto" destination="454" id="name-outlet-454"/>
+                        <outlet property="TakePhotoButton" destination="454" id="name-outlet-454"/>
                         <outlet property="CancelButton" destination="455" id="name-outlet-455"/>
+                        <outlet property="FlashToggleButton" destination="494" id="name-outlet-494"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="451" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -841,6 +873,7 @@
         <image name="FlashOff.png" width="128" height="128"/>
         <image name="FlashButton.png" width="108" height="114"/>
         <image name="NoFlashButton.png" width="64" height="64"/>
+        <image name="canvas1.png" width="240" height="120"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedScreenMetrics key="destination" type="retina4"/>

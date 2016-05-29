@@ -20,11 +20,15 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton FlashToggleButton { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
 		UIImageView LiveCameraStream { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton TakePhoto { get; set; }
+		UIButton TakePhotoButton { get; set; }
 
 		[Action ("CancelButton_TouchUpInside:")]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -36,13 +40,17 @@ namespace SnagScript
 				CancelButton.Dispose ();
 				CancelButton = null;
 			}
+			if (FlashToggleButton != null) {
+				FlashToggleButton.Dispose ();
+				FlashToggleButton = null;
+			}
 			if (LiveCameraStream != null) {
 				LiveCameraStream.Dispose ();
 				LiveCameraStream = null;
 			}
-			if (TakePhoto != null) {
-				TakePhoto.Dispose ();
-				TakePhoto = null;
+			if (TakePhotoButton != null) {
+				TakePhotoButton.Dispose ();
+				TakePhotoButton = null;
 			}
 		}
 	}

@@ -16,6 +16,14 @@ namespace SnagScript
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton buttonEmail { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton buttonOptions { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
 		UIImageView imageMeds { get; set; }
 
 		[Outlet]
@@ -32,22 +40,30 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel labMsg1 { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel labMsg2 { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
 		UILabel labProviderName { get; set; }
 
-		[Action ("UIButton5_TouchUpInside:")]
+		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		partial void UIButton5_TouchUpInside (UIButton sender);
+		UILabel labTipMed { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labTipPatientID { get; set; }
+
+		[Action ("ButtonOptions_TouchUpInside:")]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		partial void ButtonOptions_TouchUpInside (UIButton sender);
 
 		void ReleaseDesignerOutlets ()
 		{
+			if (buttonEmail != null) {
+				buttonEmail.Dispose ();
+				buttonEmail = null;
+			}
+			if (buttonOptions != null) {
+				buttonOptions.Dispose ();
+				buttonOptions = null;
+			}
 			if (imageMeds != null) {
 				imageMeds.Dispose ();
 				imageMeds = null;
@@ -64,17 +80,17 @@ namespace SnagScript
 				labDate.Dispose ();
 				labDate = null;
 			}
-			if (labMsg1 != null) {
-				labMsg1.Dispose ();
-				labMsg1 = null;
-			}
-			if (labMsg2 != null) {
-				labMsg2.Dispose ();
-				labMsg2 = null;
-			}
 			if (labProviderName != null) {
 				labProviderName.Dispose ();
 				labProviderName = null;
+			}
+			if (labTipMed != null) {
+				labTipMed.Dispose ();
+				labTipMed = null;
+			}
+			if (labTipPatientID != null) {
+				labTipPatientID.Dispose ();
+				labTipPatientID = null;
 			}
 		}
 	}
