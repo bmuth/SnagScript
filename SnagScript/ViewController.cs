@@ -23,6 +23,8 @@ namespace SnagScript
 		private UITapGestureRecognizer SingleTapPatientImageGesture = null;
 		private UITapGestureRecognizer SingleTapMedsImageGesture = null;
 
+		private UIImage imagePatientOriginal = null;
+		private UIImage imagePatientEnhanced = null;
 
 		static public OptionData _OptionData = new OptionData {EmailAddress = "email address here", DoctorName = "Provider Name", CollegeNumber = "College No. here"};
 
@@ -100,6 +102,7 @@ namespace SnagScript
 
 				p.PhotoUpdated += (UIImage image) => {
 					{
+						imagePatientOriginal = image;
 						imagePatient.Image = image;
 						labTipPatientID.Hidden = true;
 					}
@@ -231,6 +234,20 @@ namespace SnagScript
 				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
 				{
 					Console.WriteLine ("Details");
+					var storyboard = this.Storyboard;
+					var p = (EnhanceController) storyboard.InstantiateViewController ("EnhanceController");
+
+					p.ImageForEditing = imagePatient.Image;
+
+					p.PhotoUpdated += (image) =>  
+					{
+						imagePatientEnhanced = image;
+						imagePatient.Image = image;
+						bIfContrastPatient = true;
+					};
+
+					this.PresentViewController (p, true, null);	
+
 				}
 				else
 				{

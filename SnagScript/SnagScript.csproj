@@ -108,6 +108,10 @@
       <DependentUpon>SnapshotViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="PatientIDCallout.cs" />
+    <Compile Include="EnhanceController.designer.cs">
+      <DependentUpon>EnhanceController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnhanceController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
