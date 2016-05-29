@@ -252,6 +252,26 @@
                                     <action selector="ButtonOptions_TouchUpInside:" destination="BYZ-38-t0r" id="594" eventType="touchUpInside"/>
                                 </connections>
                             </button>
+                            <imageView contentMode="scaleAspectFit" id="599" translatesAutoresizingMaskIntoConstraints="NO" hidden="YES">
+                                <rect key="frame" x="27" y="107" width="160" height="240"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="27" y="90" width="196" height="126"/>
+                                    <mask key="constraints">
+                                        <include reference="610"/>
+                                        <include reference="611"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="610" firstItem="599" firstAttribute="height" constant="126"/>
+                                    <constraint id="611" firstItem="599" firstAttribute="width" constant="196"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="610"/>
+                                        <exclude reference="611"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -279,6 +299,8 @@
                             <constraint id="589" firstItem="8bC-Xf-vdC" firstAttribute="bottom" secondItem="584" secondAttribute="bottom" constant="8"/>
                             <constraint id="590" firstItem="585" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="59"/>
                             <constraint id="593" firstItem="8bC-Xf-vdC" firstAttribute="bottom" secondItem="585" secondAttribute="bottom" constant="8"/>
+                            <constraint id="608" firstItem="599" firstAttribute="top" secondItem="363" secondAttribute="top" constant="39"/>
+                            <constraint id="609" firstItem="363" firstAttribute="leading" secondItem="599" secondAttribute="leading" constant="76"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -293,6 +315,7 @@
                                 <exclude reference="385"/>
                                 <exclude reference="584"/>
                                 <exclude reference="585"/>
+                                <exclude reference="599"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="380"/>
@@ -319,6 +342,8 @@
                                 <exclude reference="589"/>
                                 <exclude reference="590"/>
                                 <exclude reference="593"/>
+                                <exclude reference="608"/>
+                                <exclude reference="609"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -338,6 +363,7 @@
                                 <include reference="385"/>
                                 <include reference="584"/>
                                 <include reference="585"/>
+                                <include reference="599"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="380"/>
@@ -364,6 +390,8 @@
                                 <include reference="589"/>
                                 <include reference="590"/>
                                 <include reference="593"/>
+                                <include reference="608"/>
+                                <include reference="609"/>
                             </mask>
                         </variation>
                     </view>
@@ -377,6 +405,7 @@
                         <outlet property="labProviderName" destination="53" id="name-outlet-53"/>
                         <outlet property="buttonEmail" destination="584" id="name-outlet-584"/>
                         <outlet property="buttonOptions" destination="585" id="name-outlet-585"/>
+                        <outlet property="PatientCalloutView" destination="599" id="name-outlet-599"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

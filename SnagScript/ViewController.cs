@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using CoreGraphics;
 
 using UIKit;
 
@@ -17,6 +18,12 @@ namespace SnagScript
 
 	public partial class ViewController : UIViewController
 	{
+		private UITapGestureRecognizer SingleTapPatientCalloutGesture = null;
+		private UITapGestureRecognizer SingleTapMedsCalloutGesture = null;
+		private UITapGestureRecognizer SingleTapPatientImageGesture = null;
+		private UITapGestureRecognizer SingleTapMedsImageGesture = null;
+
+
 		static public OptionData _OptionData = new OptionData {EmailAddress = "email address here", DoctorName = "Provider Name", CollegeNumber = "College No. here"};
 
 		const double fHeightWidthRatioPatient = 78.0 / 183.0;
@@ -42,14 +49,20 @@ namespace SnagScript
 
 		private void WireUpPatientTap ()
 		{
-			//UITapGestureRecognizer DoubleTapGesture = null;
-			UITapGestureRecognizer SingleTapGesture = null;
+			SingleTapPatientImageGesture = new UITapGestureRecognizer (() => {
+				if (PatientCalloutView.Hidden == false)
+				{
+					HidePatientCallout ();
+					return;
+				}
+				var storyboard = this.Storyboard;
+				var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
+				p.fHeightWidthRatio = fHeightWidthRatioPatient;
 
-	/*		{
-				DoubleTapGesture = new UITapGestureRecognizer (() => {
-					var storyboard = this.Storyboard;
-					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
-					p.fHeightWidthRatio = fHeightWidthRatioPatient;
+				if (imagePatient.Image != null)
+				{
+					ShowPatientCallout ();
+/*						p.ImageForEditing = imagePatient.Image;
 
 					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
@@ -59,128 +72,99 @@ namespace SnagScript
 						}
 					};
 
+					this.PresentViewController (p, true, null);*/
+				}
+				else
+				{
+					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+					p.PhotoUpdated += (UIImage image) => {
+						{
+							imagePatient.Image = image;
+							labTipPatientID.Hidden = true;
+						}
+					};
+
 					this.PresentViewController (p, true, null);
-				});
-				DoubleTapGesture.NumberOfTapsRequired = 2;
-				imagePatient.AddGestureRecognizer (DoubleTapGesture);			
-			}*/
+				}
 
-			{
-				SingleTapGesture = new UITapGestureRecognizer (() => {
-					var storyboard = this.Storyboard;
-					var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
-					p.fHeightWidthRatio = fHeightWidthRatioPatient;
+			});
 
-					if (imagePatient.Image != null)
-					{
-						DrawCallout ();
-/*						p.ImageForEditing = imagePatient.Image;
-
-						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
-
-						p.PhotoUpdated += (UIImage image) => {
-							{
-								imagePatient.Image = image;
-							}
-						};
-
-						this.PresentViewController (p, true, null);*/
-					}
-					else
-					{
-						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
-
-						p.PhotoUpdated += (UIImage image) => {
-							{
-								imagePatient.Image = image;
-								labTipPatientID.Hidden = true;
-							}
-						};
-
-						this.PresentViewController (p, true, null);
-					}
-
-				});
-
-				SingleTapGesture.NumberOfTapsRequired = 1;
-				//SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
-				imagePatient.AddGestureRecognizer (SingleTapGesture);
-			}
+			SingleTapPatientImageGesture.NumberOfTapsRequired = 1;
+			imagePatient.AddGestureRecognizer (SingleTapPatientImageGesture);
 		}
 
-		private void DrawCallout ()
+		/*******************************************
+		 * 
+		 * ShowPatientCallout
+		 * 
+		 * ****************************************/
+
+		private void ShowPatientCallout ()
 		{
-			//CallView.Image = Bubble1.ImageOfCanvas1;
-
+			PatientCalloutView.Hidden = false;
+			PatientCalloutView.AddGestureRecognizer (SingleTapPatientCalloutGesture);
 		}
+
+		/*******************************************
+		 * 
+		 * HidePatientCallout
+		 * 
+		 * ****************************************/
+
+		private void HidePatientCallout ()
+		{
+			PatientCalloutView.RemoveGestureRecognizer (SingleTapPatientCalloutGesture);
+			PatientCalloutView.Hidden = true;
+		}
+
 		/***************************
 		 * WireUpMedsTap
 		 * ************************/
 
 		private void WireUpMedsTap ()
 		{
-			//UITapGestureRecognizer DoubleTapGesture = null;
-			UITapGestureRecognizer SingleTapGesture = null;
+			SingleTapMedsImageGesture = new UITapGestureRecognizer (() => {
+				if (PatientCalloutView.Hidden == false)
+				{
+					HidePatientCallout ();
+					return;
+				}
+				var storyboard = this.Storyboard;
+				var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
+				p.fHeightWidthRatio = fHeightWidthRatioMeds;
 
-/*			{
-				DoubleTapGesture = new UITapGestureRecognizer (() => {
-					var storyboard = this.Storyboard;
-					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
-					p.fHeightWidthRatio = fHeightWidthRatioMeds;
+				if (imageMeds.Image != null)
+				{
+/*						p.ImageForEditing = imageMeds.Image;
 
 					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
 					p.PhotoUpdated += (UIImage image) => {
 						{
 							imageMeds.Image = image;
+							labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
 						}
 					};
 
-					this.PresentViewController (p, true, null);
-				});
-				DoubleTapGesture.NumberOfTapsRequired = 2;
-				imageMeds.AddGestureRecognizer (DoubleTapGesture);			
-			}*/
+					this.PresentViewController (p, true, null);*/
+				}
+				else
+				{
+					p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
-			{
-				SingleTapGesture = new UITapGestureRecognizer (() => {
-					var storyboard = this.Storyboard;
-					var p = (SnapshotViewController)storyboard.InstantiateViewController ("SnapshotViewController");
-					p.fHeightWidthRatio = fHeightWidthRatioMeds;
+					p.PhotoUpdated += (UIImage image) => {
+						{
+							imageMeds.Image = image;
+							labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
+							labTipMed.Hidden = true;
+						}
+					};
 
-					if (imageMeds.Image != null)
-					{
-/*						p.ImageForEditing = imageMeds.Image;
-
-						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
-
-						p.PhotoUpdated += (UIImage image) => {
-							{
-								imageMeds.Image = image;
-								labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
-							}
-						};
-
-						this.PresentViewController (p, true, null);*/
-					}
-					else
-					{
-						p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
-
-						p.PhotoUpdated += (UIImage image) => {
-							{
-								imageMeds.Image = image;
-								labDate.Text = DateTime.Today.ToString ("MMM dd, yyyy");
-								labTipMed.Hidden = true;
-							}
-						};
-
-						this.PresentViewController (p, true, null);					}
-				});
-				SingleTapGesture.NumberOfTapsRequired = 1;
-				//SingleTapGesture.RequireGestureRecognizerToFail (DoubleTapGesture);
-				imageMeds.AddGestureRecognizer (SingleTapGesture);
-			}
+					this.PresentViewController (p, true, null);					}
+			});
+			SingleTapMedsImageGesture.NumberOfTapsRequired = 1;
+			imageMeds.AddGestureRecognizer (SingleTapMedsImageGesture);
 		}
 
 		/***************************************
@@ -197,12 +181,50 @@ namespace SnagScript
 
 			labCollegeNo.Text = _OptionData.CollegeNumber;
 			labProviderName.Text = _OptionData.DoctorName;
-
-			WireUpPatientTap ();
-			WireUpMedsTap ();
-			DrawCallout ();
 		}
 
+		/************************************************
+		 * 
+		 * ViewDidLayoutSubviews
+		 * 
+		 * *********************************************/
+
+		public override void ViewDidLayoutSubviews()
+		{
+			base.ViewDidLayoutSubviews();
+
+			WireUpPatientTap ();
+			WireUpMedsTap ();	
+
+			SingleTapPatientCalloutGesture = new UITapGestureRecognizer (() => {
+				CGPoint pt = SingleTapPatientCalloutGesture.LocationInView (PatientCalloutView);
+				Console.WriteLine ("PatientCallout touched at {0}", pt);
+
+				if (pt.X < PatientCalloutView.Bounds.Width / 3)
+				{
+					Console.WriteLine ("Contrast");
+				}
+				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
+				{
+					Console.WriteLine ("Details");
+				}
+				else
+				{
+					Console.WriteLine ("Camera");
+				}
+					
+				if (PatientCalloutView.Bounds.Contains (pt))
+				{
+					Console.WriteLine ("point is contained in PatientCallout");
+				}
+				else
+				{
+					//HidePatientCallout ();
+				}
+			});
+
+			PatientCalloutView.Image = Bubble1.ImageOfPatientCallout;
+		}
 		/************************************************
 		 * 
 		 * LoadPersistData ()

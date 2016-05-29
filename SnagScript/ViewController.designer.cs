@@ -50,6 +50,10 @@ namespace SnagScript
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UILabel labTipPatientID { get; set; }
 
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIImageView PatientCalloutView { get; set; }
+
 		[Action ("ButtonOptions_TouchUpInside:")]
 		[GeneratedCode ("iOS Designer", "1.0")]
 		partial void ButtonOptions_TouchUpInside (UIButton sender);
@@ -91,6 +95,10 @@ namespace SnagScript
 			if (labTipPatientID != null) {
 				labTipPatientID.Dispose ();
 				labTipPatientID = null;
+			}
+			if (PatientCalloutView != null) {
+				PatientCalloutView.Dispose ();
+				PatientCalloutView = null;
 			}
 		}
 	}

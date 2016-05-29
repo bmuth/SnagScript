@@ -107,6 +107,7 @@
     <Compile Include="SnapshotViewController.designer.cs">
       <DependentUpon>SnapshotViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bubble1.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
