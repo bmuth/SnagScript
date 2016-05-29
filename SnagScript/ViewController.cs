@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using CoreGraphics;
+using CoreImage;
 
 using UIKit;
 
@@ -14,6 +15,9 @@ namespace SnagScript
 		public string EmailAddress;
 		public string DoctorName;
 		public string CollegeNumber;
+		public float BrightnessValue;
+		public float ContrastValue;
+		public float SaturationValue;
 	}
 
 	public partial class ViewController : UIViewController
@@ -95,6 +99,7 @@ namespace SnagScript
 						imagePatient.Image = image;
 						labTipPatientID.Hidden = true;
 						bIfContrastPatient = false;
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
 						Console.WriteLine ("Contrast false");
 					}
 				};
@@ -110,14 +115,6 @@ namespace SnagScript
 
 		private void ShowPatientCallout ()
 		{
-			if (!bIfContrastPatient)
-			{
-				PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
-			}
-			else
-			{
-				PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
-			}
 
 			PatientCalloutView.Hidden = false;
 			PatientCalloutView.AddGestureRecognizer (SingleTapPatientCalloutGesture);
@@ -185,6 +182,36 @@ namespace SnagScript
 			imageMeds.AddGestureRecognizer (SingleTapMedsImageGesture);
 		}
 
+		/*******************************************
+		 * 
+		 * Apply contrast, brightness, saturation
+		 * 
+		 * ****************************************/
+
+		private UIImage ApplyContrast (UIImage original)
+		{
+			CIColorControls colorCtrls = new CIColorControls ();
+
+			colorCtrls.Image = CIImage.FromCGImage (original.CGImage);
+			CIContext context = CIContext.FromOptions (null);
+
+			colorCtrls.Brightness = _OptionData.BrightnessValue;
+			colorCtrls.Saturation = _OptionData.SaturationValue;
+			colorCtrls.Contrast = _OptionData.ContrastValue;
+
+			// do the transformation
+			UIImage contrastImage = null;
+			using (var outputImage = colorCtrls.OutputImage) 
+			{
+				var result = context.CreateCGImage (outputImage, outputImage.Extent);
+				// display the result in the UIImageView
+				contrastImage = UIImage.FromImage (result);
+			}
+			//context.Dispose ();
+			//colorCtrls.Dispose ();
+			return contrastImage;
+		}
+
 		/***************************************
 		 * 
 		 * ViewDidLoad ()
@@ -215,6 +242,11 @@ namespace SnagScript
 					if (!bIfContrastPatient)
 					{
 						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
+
+						if (imagePatientEnhanced == null)
+						{
+							imagePatientEnhanced = ApplyContrast (imagePatientOriginal);
+						}
 						imagePatient.Image = imagePatientEnhanced;
 					}
 					else
@@ -223,6 +255,7 @@ namespace SnagScript
 						imagePatient.Image = imagePatientOriginal;
 					}
 					bIfContrastPatient = !bIfContrastPatient;
+					Console.WriteLine ("contrast is now {0}", bIfContrastPatient);
 				}
 				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
 				{
@@ -230,16 +263,25 @@ namespace SnagScript
 					var storyboard = this.Storyboard;
 					var p = (EnhanceController) storyboard.InstantiateViewController ("EnhanceController");
 
-					p.ImageForEditing = imagePatient.Image;
+					p.ImageForEditing = imagePatientOriginal;
 
 					p.PhotoUpdated += (image) =>  
 					{
 						imagePatientEnhanced = image;
 						imagePatient.Image = image;
 						bIfContrastPatient = true;
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
 						Console.WriteLine ("Contrast now true");
 
 						HidePatientCallout ();
+						SavePersistedData ();
+					};
+
+					p.ContrastUpdated += (contrast, saturation, brightness) => 
+					{
+						_OptionData.ContrastValue = contrast;
+						_OptionData.SaturationValue = saturation;
+						_OptionData.BrightnessValue = brightness;
 					};
 
 					this.PresentViewController (p, true, null);	
@@ -314,21 +356,31 @@ namespace SnagScript
 
 			p.OptionsUpdated += () => 
 			{
-				var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-				var filePath = Path.Combine (documentsPath, "SnagScript.xml");
-
-				XmlSerializer ser = new XmlSerializer (typeof (OptionData));	
-				using (TextWriter writer = new StreamWriter (filePath))
-				{
-					ser.Serialize (writer, _OptionData);
-					writer.Close ();
-				}
-
+				SavePersistedData ();
 				labProviderName.Text = _OptionData.DoctorName;
 				labCollegeNo.Text = _OptionData.CollegeNumber;
 			};
 
 			this.PresentViewController (p, true, null);	
+		}
+
+		/*******************************************
+		 * 
+		 * SavePersistedData
+		 * 
+		 * ****************************************/
+
+		private void SavePersistedData ()
+		{
+			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+			var filePath = Path.Combine (documentsPath, "SnagScript.xml");
+
+			XmlSerializer ser = new XmlSerializer (typeof (OptionData));	
+			using (TextWriter writer = new StreamWriter (filePath))
+			{
+				ser.Serialize (writer, _OptionData);
+				writer.Close ();
+			}
 		}
 	}
 }

@@ -10,6 +10,8 @@ namespace SnagScript
 	{
 		public delegate void PhotoUpdatedHandler (UIImage image);
 		public event PhotoUpdatedHandler PhotoUpdated;
+		public delegate void ContrastUpdateHandler (float contrast, float saturation, float brightness);
+		public event ContrastUpdateHandler ContrastUpdated;
 
 		public UIImage ImageForEditing;
 
@@ -79,6 +81,8 @@ namespace SnagScript
 			colorCtrls.Brightness = BrightnessSlider.Value;
 			colorCtrls.Saturation = SaturationSlider.Value;
 			colorCtrls.Contrast = ContrastSlider.Value;
+
+			ContrastUpdated (ContrastSlider.Value, SaturationSlider.Value, BrightnessSlider.Value);
 
 			// do the transformation
 			using (var outputImage = colorCtrls.OutputImage) 
