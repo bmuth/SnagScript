@@ -227,6 +227,9 @@
                                     </mask>
                                     <rect key="frame" x="64" y="512" width="48" height="48"/>
                                 </variation>
+                                <connections>
+                                    <action selector="ButtonEmail_TouchUpInside:" destination="BYZ-38-t0r" id="832" eventType="touchUpInside"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="585">
                                 <rect key="frame" x="55" y="518" width="46" height="30"/>
@@ -274,6 +277,26 @@
                                     <rect key="frame" x="27" y="90" width="196" height="126"/>
                                 </variation>
                             </imageView>
+                            <imageView contentMode="scaleToFill" id="805" translatesAutoresizingMaskIntoConstraints="NO" hidden="YES">
+                                <rect key="frame" x="127" y="90" width="160" height="240"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="104" y="108" width="196" height="126"/>
+                                    <mask key="constraints">
+                                        <include reference="806"/>
+                                        <include reference="807"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="806" firstItem="805" firstAttribute="height" constant="126"/>
+                                    <constraint id="807" firstItem="805" firstAttribute="width" constant="196"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="806"/>
+                                        <exclude reference="807"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -303,6 +326,8 @@
                             <constraint firstAttribute="bottom" secondItem="585" secondAttribute="bottom" constant="8" id="593"/>
                             <constraint firstItem="599" firstAttribute="top" secondItem="363" secondAttribute="top" constant="39" id="608"/>
                             <constraint firstItem="363" firstAttribute="leading" secondItem="599" secondAttribute="leading" constant="76" id="609"/>
+                            <constraint id="808" firstItem="805" firstAttribute="top" secondItem="3" secondAttribute="top" constant="76"/>
+                            <constraint id="809" firstItem="3" firstAttribute="trailing" secondItem="805" secondAttribute="trailing" constant="8"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -318,6 +343,7 @@
                                 <exclude reference="584"/>
                                 <exclude reference="585"/>
                                 <exclude reference="599"/>
+                                <exclude reference="805"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="380"/>
@@ -346,6 +372,8 @@
                                 <exclude reference="590"/>
                                 <exclude reference="593"/>
                                 <exclude reference="376"/>
+                                <exclude reference="808"/>
+                                <exclude reference="809"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -366,6 +394,7 @@
                                 <include reference="584"/>
                                 <include reference="585"/>
                                 <include reference="599"/>
+                                <include reference="805"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="380"/>
@@ -394,6 +423,8 @@
                                 <include reference="590"/>
                                 <include reference="593"/>
                                 <include reference="376"/>
+                                <include reference="808"/>
+                                <include reference="809"/>
                             </mask>
                         </variation>
                     </view>
@@ -403,11 +434,14 @@
                         <outlet property="buttonOptions" destination="585" id="name-outlet-585"/>
                         <outlet property="imageMeds" destination="364" id="name-outlet-364"/>
                         <outlet property="imagePatient" destination="363" id="name-outlet-363"/>
-                        <outlet property="labCollegeNo" destination="118" id="name-outlet-118"/>
+                        <outlet property="labDoctorNo" destination="118" id="name-outlet-118"/>
                         <outlet property="labDate" destination="385" id="name-outlet-385"/>
-                        <outlet property="labProviderName" destination="53" id="name-outlet-53"/>
+                        <outlet property="labDoctorName" destination="53" id="name-outlet-53"/>
                         <outlet property="labTipMed" destination="132" id="name-outlet-132"/>
                         <outlet property="labTipPatientID" destination="131" id="name-outlet-131"/>
+                        <outlet property="MedsCalloutView" destination="805" id="name-outlet-805"/>
+                        <outlet property="imageviewScript" destination="3" id="name-outlet-3"/>
+                        <outlet property="labSignature" destination="52" id="name-outlet-52"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

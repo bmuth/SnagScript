@@ -32,7 +32,7 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel labCollegeNo { get; set; }
+		UIImageView imageviewScript { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -40,7 +40,15 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel labProviderName { get; set; }
+		UILabel labDoctorName { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labDoctorNo { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UILabel labSignature { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -52,7 +60,15 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
+		UIImageView MedsCalloutView { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
 		UIImageView PatientCalloutView { get; set; }
+
+		[Action ("ButtonEmail_TouchUpInside:")]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		partial void ButtonEmail_TouchUpInside (UIButton sender);
 
 		[Action ("ButtonOptions_TouchUpInside:")]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -76,17 +92,25 @@ namespace SnagScript
 				imagePatient.Dispose ();
 				imagePatient = null;
 			}
-			if (labCollegeNo != null) {
-				labCollegeNo.Dispose ();
-				labCollegeNo = null;
+			if (imageviewScript != null) {
+				imageviewScript.Dispose ();
+				imageviewScript = null;
 			}
 			if (labDate != null) {
 				labDate.Dispose ();
 				labDate = null;
 			}
-			if (labProviderName != null) {
-				labProviderName.Dispose ();
-				labProviderName = null;
+			if (labDoctorName != null) {
+				labDoctorName.Dispose ();
+				labDoctorName = null;
+			}
+			if (labDoctorNo != null) {
+				labDoctorNo.Dispose ();
+				labDoctorNo = null;
+			}
+			if (labSignature != null) {
+				labSignature.Dispose ();
+				labSignature = null;
 			}
 			if (labTipMed != null) {
 				labTipMed.Dispose ();
@@ -95,6 +119,10 @@ namespace SnagScript
 			if (labTipPatientID != null) {
 				labTipPatientID.Dispose ();
 				labTipPatientID = null;
+			}
+			if (MedsCalloutView != null) {
+				MedsCalloutView.Dispose ();
+				MedsCalloutView = null;
 			}
 			if (PatientCalloutView != null) {
 				PatientCalloutView.Dispose ();

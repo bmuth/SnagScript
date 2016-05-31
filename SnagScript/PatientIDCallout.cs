@@ -21,10 +21,6 @@ namespace SnagScript
     public class PatientIDCallout : NSObject
     {
 
-        //// Cache
-
-        private static UIImage imageOfPatientCallout;
-
         //// Initialization
 
         static PatientIDCallout()
@@ -40,8 +36,8 @@ namespace SnagScript
             var cameraLine = UIColor.FromRGBA(0.000f, 0.000f, 0.000f, 1.000f);
             var cameraInterior = UIColor.FromRGBA(1.000f, 1.000f, 1.000f, 1.000f);
             var whiteLens = UIColor.FromRGBA(1.000f, 1.000f, 1.000f, 1.000f);
-            var contrastBlue = UIColor.FromRGBA(0.000f, 0.235f, 1.000f, 0.617f);
-			contrastBlue = contrastFill;
+            //var contrastBlue = UIColor.FromRGBA(0.000f, 0.235f, 1.000f, 0.617f);
+			var contrastBlue = contrastFill;
 
             //// Bezier 6 Drawing
             UIBezierPath bezier6Path = new UIBezierPath();
@@ -187,14 +183,14 @@ namespace SnagScript
         //// Generated Images
 
 		public static UIImage ImageOfPatientCallout (UIColor clr)
-        {
-			UIGraphics.BeginImageContextWithOptions(new CGSize(188.0f, 138.0f), false, 0);
-                            PatientIDCallout.DrawPatientCallout(clr);
+		{
+			UIGraphics.BeginImageContextWithOptions (new CGSize (188.0f, 138.0f), false, 0);
+			PatientIDCallout.DrawPatientCallout (clr);
 
-            imageOfPatientCallout = UIGraphics.GetImageFromCurrentImageContext();
-            UIGraphics.EndImageContext();
+			UIImage imageOfPatientCallout = UIGraphics.GetImageFromCurrentImageContext ();
+			UIGraphics.EndImageContext ();
 
-            return imageOfPatientCallout;
- 		}
+			return imageOfPatientCallout;
+		}
     }
 }

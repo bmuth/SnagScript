@@ -112,6 +112,7 @@
       <DependentUpon>EnhanceController.cs</DependentUpon>
     </Compile>
     <Compile Include="EnhanceController.cs" />
+    <Compile Include="MedsCallout.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
