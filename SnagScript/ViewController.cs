@@ -515,30 +515,80 @@ namespace SnagScript
 			{
 				UIImage patient = imagePatient.Image;
 
+				nfloat ScaledPatientHeight;
+				nfloat ScaledPatientWidth;
+
+				if (patient.Size.Width / patient.Size.Height > imagePatient.Bounds.Width / imagePatient.Bounds.Height)
+				{
+					/* must be some space above and below image
+					 * ---------------------------------------- */
+
+					ScaledPatientHeight = imagePatient.Bounds.Width / patient.Size.Width * patient.Size.Height;
+					ScaledPatientWidth = imagePatient.Bounds.Width;
+				}
+				else
+				{
+					/* must be space left and right of image
+					 * ------------------------------------- */
+
+					ScaledPatientHeight = imagePatient.Bounds.Height;
+					ScaledPatientWidth = imagePatient.Bounds.Height / patient.Size.Height * patient.Size.Width;
+				}
+
+
 				nfloat FromLeft = imagePatient.Frame.Left - imageviewScript.Frame.Left;
+				FromLeft += (nfloat) ((imagePatient.Bounds.Width - ScaledPatientWidth) / 2.0);
 				FromLeft *= ScaleUpFactor;
 
 				nfloat FromTop = imagePatient.Frame.Top - imageviewScript.Frame.Top;
+				FromTop += (nfloat) ((imagePatient.Bounds.Height - ScaledPatientHeight) / 2.0);
+
 				nfloat FromBottom = imageviewScript.Frame.Height - FromTop;
-				FromBottom -= imagePatient.Frame.Height;
+				FromBottom -= ScaledPatientHeight;
+
 				FromBottom *= ScaleUpFactor;
 
-				patient = patient.Scale (new CGSize (imagePatient.Bounds.Width * ScaleUpFactor, imagePatient.Bounds.Height * ScaleUpFactor));
+				//patient = patient.Scale (new CGSize (patient.Size.Width * ScaleUpFactor, patient.Size.Height * ScaleUpFactor));
+				//patient = patient.Scale (new CGSize (imagePatient.Bounds.Width * ScaleUpFactor, imagePatient.Bounds.Height * ScaleUpFactor));
 
 				context.DrawImage (new CGRect (new CGPoint (FromLeft, FromBottom), patient.Size), patient.CGImage);
 			}
 			{
 				UIImage meds = imageMeds.Image;
 
+				nfloat ScaledMedsHeight;
+				nfloat ScaledMedsWidth;
+
+				if (meds.Size.Width / meds.Size.Height > imageMeds.Bounds.Width / imageMeds.Bounds.Height)
+				{
+					/* must be some space above and below image
+					 * ---------------------------------------- */
+
+					ScaledMedsHeight = imageMeds.Bounds.Width / meds.Size.Width * meds.Size.Height;
+					ScaledMedsWidth = imageMeds.Bounds.Width;
+				}
+				else
+				{
+					/* must be space left and right of image
+					 * ------------------------------------- */
+
+					ScaledMedsHeight = imageMeds.Bounds.Height;
+					ScaledMedsWidth = imageMeds.Bounds.Height / meds.Size.Height * meds.Size.Width;
+				}
+
 				nfloat FromLeft = imageMeds.Frame.Left - imageviewScript.Frame.Left;
+				FromLeft += (nfloat) ((imageMeds.Bounds.Width - ScaledMedsWidth) / 2.0);
 				FromLeft *= ScaleUpFactor;
 
 				nfloat FromTop = imageMeds.Frame.Top - imageviewScript.Frame.Top;
+				FromTop += (nfloat) ((imageMeds.Bounds.Height - ScaledMedsHeight) / 2.0);
+
 				nfloat FromBottom = imageviewScript.Frame.Height - FromTop;
-				FromBottom -= imageMeds.Frame.Height;
+				//FromBottom -= imageMeds.Frame.Height;
+				FromBottom -= ScaledMedsHeight;
 				FromBottom *= ScaleUpFactor;
 
-				meds = meds.Scale (new CGSize (imageMeds.Bounds.Width * ScaleUpFactor, imageMeds.Bounds.Height * ScaleUpFactor));
+				//meds = meds.Scale (new CGSize (imageMeds.Bounds.Width * ScaleUpFactor, imageMeds.Bounds.Height * ScaleUpFactor));
 
 				context.DrawImage (new CGRect (new CGPoint (FromLeft, FromBottom), meds.Size), meds.CGImage);
 			}
