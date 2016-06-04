@@ -324,8 +324,14 @@ namespace SnagScript
 				{
 					Console.WriteLine ("Camera");
 					HidePatientCallout ();
-					imagePatientEnhanced.Dispose ();
-					imagePatientOriginal.Dispose ();
+					if (imagePatientEnhanced != null)
+					{
+						imagePatientEnhanced.Dispose ();
+					}
+					if (imagePatientOriginal != null)
+					{
+						imagePatientOriginal.Dispose ();
+					}
 					imagePatientEnhanced = null;
 					imagePatientOriginal = null;
 					imagePatient.Image.Dispose ();
@@ -498,8 +504,14 @@ namespace SnagScript
 			CGSize sz = script.Size;
 
 			var colorSpace = CoreGraphics.CGColorSpace.CreateDeviceRGB ();
-			nint BitmapWidth = (nint) sz.Width;
-			nint BitmapHeight = (nint) sz.Height;
+
+			/* create a bitmap that roughly is the shape of PrescriptionTemplate3.png
+			 * ----------------------------------------------------------------------
+			 * but has the same aspect ratio of imageViewScript */
+
+
+			nint BitmapWidth = (nint) (imageviewScript.Bounds.Width * ScaleUpFactor);
+			nint BitmapHeight = (nint) (imageviewScript.Bounds.Height * ScaleUpFactor);
 
 			var context = new CGBitmapContext(null, BitmapWidth, BitmapHeight, 8, 0, colorSpace, CGImageAlphaInfo.PremultipliedFirst);
 
@@ -510,7 +522,31 @@ namespace SnagScript
 			transformedImage = UIGraphics.GetImageFromCurrentImageContext ();
 			UIGraphics.EndImageContext ();*/
 
-			context.DrawImage (new CGRect (0, 0, sz.Width, sz.Height), script.CGImage);
+			/* Figure out the offset
+			* ---------------------*/
+
+			nfloat fLeft = (nfloat) ((BitmapWidth - sz.Width) / 2.0);
+			nfloat fBottom = (nfloat) ((BitmapHeight - sz.Height) / 2.0);
+
+			context.DrawImage (new CGRect (fLeft, fBottom, sz.Width, sz.Height), script.CGImage);
+
+			// debug - fill imagePatient
+
+/*			{
+				CGRect rectangle = MapRect (imagePatient.Frame);
+				context.SetFillColor (UIColor.Red.CGColor);
+				context.SetStrokeColor (UIColor.Blue.CGColor);
+				context.FillRect (rectangle);
+				context.StrokeRect (rectangle);
+
+				rectangle = MapRect (imageMeds.Frame);
+				context.FillRect (rectangle);
+
+				context.StrokeRectWithWidth (rectangle, 3);
+			}*/
+
+			/* Now draw patient id
+			 * ------------------- */
 
 			{
 				UIImage patient = imagePatient.Image;
@@ -535,23 +571,21 @@ namespace SnagScript
 					ScaledPatientWidth = imagePatient.Bounds.Height / patient.Size.Height * patient.Size.Width;
 				}
 
-
-				nfloat FromLeft = imagePatient.Frame.Left - imageviewScript.Frame.Left;
+				nfloat FromLeft = imagePatient.Frame.Left;
 				FromLeft += (nfloat) ((imagePatient.Bounds.Width - ScaledPatientWidth) / 2.0);
-				FromLeft *= ScaleUpFactor;
 
-				nfloat FromTop = imagePatient.Frame.Top - imageviewScript.Frame.Top;
+
+				nfloat FromTop = imagePatient.Frame.Top;
 				FromTop += (nfloat) ((imagePatient.Bounds.Height - ScaledPatientHeight) / 2.0);
 
-				nfloat FromBottom = imageviewScript.Frame.Height - FromTop;
-				FromBottom -= ScaledPatientHeight;
+				CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledPatientWidth, ScaledPatientHeight));
 
-				FromBottom *= ScaleUpFactor;
+/*				context.SetFillColor (UIColor.Yellow.CGColor);
+				context.SetStrokeColor (UIColor.Black.CGColor);
+				context.FillRect (r);
+				context.StrokeRectWithWidth (r, 3);*/
 
-				//patient = patient.Scale (new CGSize (patient.Size.Width * ScaleUpFactor, patient.Size.Height * ScaleUpFactor));
-				//patient = patient.Scale (new CGSize (imagePatient.Bounds.Width * ScaleUpFactor, imagePatient.Bounds.Height * ScaleUpFactor));
-
-				context.DrawImage (new CGRect (new CGPoint (FromLeft, FromBottom), patient.Size), patient.CGImage);
+				context.DrawImage (new CGRect (r.Left, r.Top, ScaledPatientWidth * ScaleUpFactor, ScaledPatientHeight * ScaleUpFactor), patient.CGImage);
 			}
 			{
 				UIImage meds = imageMeds.Image;
@@ -576,64 +610,38 @@ namespace SnagScript
 					ScaledMedsWidth = imageMeds.Bounds.Height / meds.Size.Height * meds.Size.Width;
 				}
 
-				nfloat FromLeft = imageMeds.Frame.Left - imageviewScript.Frame.Left;
+				nfloat FromLeft = imageMeds.Frame.Left;
 				FromLeft += (nfloat) ((imageMeds.Bounds.Width - ScaledMedsWidth) / 2.0);
-				FromLeft *= ScaleUpFactor;
 
-				nfloat FromTop = imageMeds.Frame.Top - imageviewScript.Frame.Top;
+				nfloat FromTop = imageMeds.Frame.Top;
 				FromTop += (nfloat) ((imageMeds.Bounds.Height - ScaledMedsHeight) / 2.0);
 
-				nfloat FromBottom = imageviewScript.Frame.Height - FromTop;
-				//FromBottom -= imageMeds.Frame.Height;
-				FromBottom -= ScaledMedsHeight;
-				FromBottom *= ScaleUpFactor;
+				CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledMedsWidth, ScaledMedsHeight));
 
-				//meds = meds.Scale (new CGSize (imageMeds.Bounds.Width * ScaleUpFactor, imageMeds.Bounds.Height * ScaleUpFactor));
+/*				context.SetFillColor (UIColor.Yellow.CGColor);
+				context.SetStrokeColor (UIColor.Black.CGColor);
+				context.FillRect (r);
+				context.StrokeRectWithWidth (r, 3);*/
 
-				context.DrawImage (new CGRect (new CGPoint (FromLeft, FromBottom), meds.Size), meds.CGImage);
+				context.DrawImage (new CGRect (r.Left, r.Top, ScaledMedsWidth * ScaleUpFactor, ScaledMedsHeight * ScaleUpFactor), meds.CGImage);
 			}
 
-			//context.ScaleCTM (ScaleUpFactor, ScaleUpFactor);
-			//context.TranslateCTM (0, -imagePatient.Bounds.Height);
-
-
-			// set general-purpose graphics state
-			/*context.SetLineWidth (3.0f);
-			context.SetStrokeColor (UIColor.Red.CGColor);
-			context.SetFillColor (UIColor.White.CGColor);
-			context.SetShadow (new CGSize (5, 5), 0, UIColor.Blue.CGColor);
-
-			// set text specific graphics state
-			context.SetTextDrawingMode (CGTextDrawingMode.FillStroke);
-			context.SelectFont ("Helvetica", fontSize, CGTextEncoding.MacRoman);
-
-			// show the text
-			context.ShowText ("Hello Core Graphics");*/
-
-
-			/*CGPoint location = new CGPoint(50f, 50f); 
-			UIFont font = UIFont.FromName("Verdana-Bold", 28f); 
-			NSString drawText = new NSString ("This text is drawn!"); 
-			context.SetTextDrawingMode(CGTextDrawingMode.Stroke); 
-			context.SetStrokeColor (UIColor.Black.CGColor); 
-			context.SetLineWidth(4f); 
-			drawText.DrawString (location, font);
-			*/	
-
-
-
-			context.SelectFont ("Helvetica", 40, CGTextEncoding.MacRoman);
+			context.SelectFont ("Helvetica", 50, CGTextEncoding.MacRoman);
 			context.SetTextDrawingMode (CGTextDrawingMode.FillStroke);
 			context.SetStrokeColor (UIColor.Black.CGColor);
-
+			context.SetFillColor (UIColor.Black.CGColor);
 
 			{
-				CGPoint p = MapPoint (labSignature.Frame);
+				CGRect r = labSignature.Frame;
+//				r.Offset (0, -labSignature.Frame.Height);
+				CGPoint p = MapPoint (r);
 				context.ShowTextAtPoint (p.X, p.Y, labSignature.Text);
 			}
 
 			{
-				CGPoint p = MapPoint (labDoctorName.Frame);
+				CGRect r = labDoctorName.Frame;
+//				r.Offset (0, -labDoctorName.Frame.Height);
+				CGPoint p = MapPoint (r);
 
 
 				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
@@ -652,7 +660,9 @@ namespace SnagScript
 			}
 
 			{
-				CGPoint p = MapPoint (labDoctorNo.Frame);
+				CGRect r = labDoctorNo.Frame;
+//				r.Offset (0, -labDoctorNo.Frame.Height);
+				CGPoint p = MapPoint (r);
 
 				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
 				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
@@ -742,6 +752,19 @@ namespace SnagScript
 			return new CGPoint (FromLeft, FromBottom);
 		}
 
+		/********************************
+		 * 
+		 * MapRect
+		 * 
+		 * ******************************/
+
+		private CGRect MapRect (CGRect frame)
+		{
+			CGPoint pt = MapPoint (frame);
+			CGSize sz = new CGSize (frame.Size.Width * ScaleUpFactor, frame.Size.Height * ScaleUpFactor);
+			return new CGRect (pt, sz);
+		}
+
 		/********************************************************
 		 * 
 		 * ScaleUpRect from device to PNG dimensions
@@ -772,7 +795,7 @@ namespace SnagScript
 					nfloat scaley = sz.Height / imageviewScript.Bounds.Height;
 					nfloat scalex = sz.Width / imageviewScript.Bounds.Width;
 
-					_scaleUpFactor = (nfloat) Math.Min (scalex, scaley);
+					_scaleUpFactor = (nfloat) Math.Max (scalex, scaley);
 
 					script.Dispose ();
 
