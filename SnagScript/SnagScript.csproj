@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="EnhanceController.cs" />
     <Compile Include="MedsCallout.cs" />
+    <Compile Include="AlertViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -125,15 +126,13 @@
     <BundleResource Include="Resources\ContrastOff.png" />
     <BundleResource Include="Resources\BrightnessOn.png" />
     <BundleResource Include="Resources\BrightnessOff.png" />
-    <BundleResource Include="Resources\CropOn.png" />
-    <BundleResource Include="Resources\CropOff.png" />
     <BundleResource Include="Resources\FlashOn.png" />
     <BundleResource Include="Resources\FlashOff.png" />
     <BundleResource Include="Resources\FlashButton.png" />
     <BundleResource Include="Resources\NoFlashButton.png" />
-    <BundleResource Include="Resources\email.png" />
     <BundleResource Include="Resources\options.png" />
     <BundleResource Include="Resources\Cancel.png" />
     <BundleResource Include="Resources\TakePhoto.png" />
+    <BundleResource Include="Resources\email2.png" />
   </ItemGroup>
 </Project>

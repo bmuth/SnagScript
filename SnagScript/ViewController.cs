@@ -102,7 +102,7 @@ namespace SnagScript
 						labTipPatientID.Hidden = true;
 						bIfContrastPatient = false;
 						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
-						Console.WriteLine ("Contrast false");
+//						Console.WriteLine ("Contrast false");
 					}
 				};
 
@@ -137,7 +137,7 @@ namespace SnagScript
 						labTipMed.Hidden = true;
 						bIfContrastMeds = false;
 						MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (UIColor.Black);
-						Console.WriteLine ("Contrast false");
+//						Console.WriteLine ("Contrast false");
 					}
 				};
 
@@ -153,6 +153,9 @@ namespace SnagScript
 
 		private void ShowPatientCallout ()
 		{
+			if (MedsCalloutView.Hidden == false) {
+				HideMedsCallout ();
+			}
 
 			PatientCalloutView.Hidden = false;
 			PatientCalloutView.AddGestureRecognizer (SingleTapPatientCalloutGesture);
@@ -177,6 +180,9 @@ namespace SnagScript
 
 		private void ShowMedsCallout ()
 		{
+			if (PatientCalloutView.Hidden == false) {
+				HidePatientCallout ();
+			}
 
 			MedsCalloutView.Hidden = false;
 			MedsCalloutView.AddGestureRecognizer (SingleTapMedsCalloutGesture);
@@ -260,18 +266,16 @@ namespace SnagScript
 			labDoctorNo.Text = _OptionData.CollegeNumber;
 			labDoctorName.Text = _OptionData.DoctorName;
 
-			base.ViewDidLayoutSubviews();
-
 			WireUpPatientTap ();
 			WireUpMedsTap ();	
 
 			SingleTapPatientCalloutGesture = new UITapGestureRecognizer (() => {
 				CGPoint pt = SingleTapPatientCalloutGesture.LocationInView (PatientCalloutView);
-				Console.WriteLine ("PatientCallout touched at {0}", pt);
+//				Console.WriteLine ("PatientCallout touched at {0}", pt);
 
 				if (pt.X < PatientCalloutView.Bounds.Width / 3)
 				{
-					Console.WriteLine ("patient Contrast");
+//					Console.WriteLine ("patient Contrast");
 					if (!bIfContrastPatient)
 					{
 						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);  
@@ -288,11 +292,11 @@ namespace SnagScript
 						imagePatient.Image = imagePatientOriginal;
 					}
 					bIfContrastPatient = !bIfContrastPatient;
-					Console.WriteLine ("patient contrast is now {0}", bIfContrastPatient);
+//					Console.WriteLine ("patient contrast is now {0}", bIfContrastPatient);
 				}
 				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
 				{
-					Console.WriteLine ("Details");
+//					Console.WriteLine ("Details");
 					var storyboard = this.Storyboard;
 					var p = (EnhanceController) storyboard.InstantiateViewController ("EnhanceController");
 
@@ -322,7 +326,7 @@ namespace SnagScript
 				}
 				else
 				{
-					Console.WriteLine ("Camera");
+//					Console.WriteLine ("Camera");
 					HidePatientCallout ();
 					if (imagePatientEnhanced != null)
 					{
@@ -343,18 +347,18 @@ namespace SnagScript
 
 			PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);      
 			bIfContrastPatient = false;
-			Console.WriteLine ("patient contrast now false");
+//			Console.WriteLine ("patient contrast now false");
 
 			/* Now, same thing for Meds Tap Gesture
 			 * ------------------------------------ */
 
 			SingleTapMedsCalloutGesture = new UITapGestureRecognizer (() => {
 				CGPoint pt = SingleTapMedsCalloutGesture.LocationInView (MedsCalloutView);
-				Console.WriteLine ("MedsCallout touched at {0}", pt);
+//				Console.WriteLine ("MedsCallout touched at {0}", pt);
 
 				if (pt.X < MedsCalloutView.Bounds.Width / 3)
 				{
-					Console.WriteLine ("Contrast");
+//					Console.WriteLine ("Contrast");
 					if (!bIfContrastMeds)
 					{
 						MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (contrastBlue);  
@@ -371,11 +375,11 @@ namespace SnagScript
 						imageMeds.Image = imageMedsOriginal;
 					}
 					bIfContrastMeds = !bIfContrastMeds;
-					Console.WriteLine ("meds contrast is now {0}", bIfContrastMeds);
+//					Console.WriteLine ("meds contrast is now {0}", bIfContrastMeds);
 				}
 				else if (pt.X > PatientCalloutView.Bounds.Width * 2.0 / 3.0)
 				{
-					Console.WriteLine ("Details");
+//					Console.WriteLine ("Details");
 					var storyboard = this.Storyboard;
 					var p = (EnhanceController) storyboard.InstantiateViewController ("EnhanceController");
 
@@ -387,7 +391,7 @@ namespace SnagScript
 						imageMeds.Image = image;
 						bIfContrastPatient = true;
 						MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (contrastBlue);  
-						Console.WriteLine ("meds Contrast now true");
+//						Console.WriteLine ("meds Contrast now true");
 
 						HideMedsCallout ();
 						SavePersistedData ();
@@ -405,7 +409,7 @@ namespace SnagScript
 				}
 				else
 				{
-					Console.WriteLine ("Camera");
+//					Console.WriteLine ("Camera");
 					HideMedsCallout ();
 					imageMedsEnhanced.Dispose ();
 					imageMedsOriginal.Dispose ();
@@ -420,7 +424,7 @@ namespace SnagScript
 
 			MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (UIColor.Black);      
 			bIfContrastMeds = false;
-			Console.WriteLine ("meds contrast now false");
+//			Console.WriteLine ("meds contrast now false");
 		}
 
 		/************************************************
@@ -498,8 +502,20 @@ namespace SnagScript
 			}
 		}
 
+		/******************************************
+		 * 
+		 * ButtonEmail clicked
+		 * 
+		 * ***************************************/
+
 		partial void ButtonEmail_TouchUpInside (UIButton sender)
 		{
+			if (imageMeds.Image == null || imagePatient.Image == null)
+			{
+				AlertViewController.PresentOKAlert ("Not ready", "The prescription is incomplete.", this);
+				return;
+			}
+
 			UIImage script = UIImage.FromFile ("PrescriptionTemplate3.png");
 			CGSize sz = script.Size;
 
@@ -633,14 +649,12 @@ namespace SnagScript
 
 			{
 				CGRect r = labSignature.Frame;
-//				r.Offset (0, -labSignature.Frame.Height);
 				CGPoint p = MapPoint (r);
 				context.ShowTextAtPoint (p.X, p.Y, labSignature.Text);
 			}
 
 			{
 				CGRect r = labDoctorName.Frame;
-//				r.Offset (0, -labDoctorName.Frame.Height);
 				CGPoint p = MapPoint (r);
 
 
@@ -661,7 +675,6 @@ namespace SnagScript
 
 			{
 				CGRect r = labDoctorNo.Frame;
-//				r.Offset (0, -labDoctorNo.Frame.Height);
 				CGPoint p = MapPoint (r);
 
 				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
@@ -703,16 +716,6 @@ namespace SnagScript
 			colorSpace.Dispose();
 			script.Dispose ();
 
-			//		var documentsDirectory = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			//		var pngFilename = System.IO.Path.Combine (documentsDirectory, "Prescription.png"); 
-
-			/*		NSData imgData = image.AsPNG ();
-			NSError err = null;
-			if (imgData.Save (pngFilename, false, out err)) {
-				Console.WriteLine ("saved as " + pngFilename);
-			} else {
-				Console.WriteLine ("NOT saved as " + pngFilename + " because" + err.LocalizedDescription);
-			}*/
 
 			// Create an email
 			var _mailController = new MFMailComposeViewController();
@@ -763,17 +766,6 @@ namespace SnagScript
 			CGPoint pt = MapPoint (frame);
 			CGSize sz = new CGSize (frame.Size.Width * ScaleUpFactor, frame.Size.Height * ScaleUpFactor);
 			return new CGRect (pt, sz);
-		}
-
-		/********************************************************
-		 * 
-		 * ScaleUpRect from device to PNG dimensions
-		 * 
-		 * ******************************************************/
-
-		private CGRect ScaleUpRect (CGRect r)
-		{
-			return new CGRect (ScaleUpFactor * r.Left, ScaleUpFactor * r.Top, ScaleUpFactor * r.Width, ScaleUpFactor * r.Height);
 		}
 
 		/********************************************************

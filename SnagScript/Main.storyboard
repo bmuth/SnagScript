@@ -214,7 +214,7 @@
                                     <constraint firstAttribute="height" constant="48" id="586"/>
                                     <constraint firstAttribute="width" constant="48" id="587"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="email.png">
+                                <state key="normal" backgroundImage="email2.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -465,25 +465,11 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="254">
                                 <rect key="frame" x="72" y="518" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="348"/>
-                                    <constraint firstAttribute="width" constant="32" id="349"/>
-                                </constraints>
                                 <state key="normal" backgroundImage="Checkmark.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="348"/>
-                                        <exclude reference="349"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="348"/>
-                                        <include reference="349"/>
-                                    </mask>
-                                    <rect key="frame" x="86" y="516" width="32" height="32"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="85" y="508" width="48" height="48"/>
                                 </variation>
                                 <connections>
                                     <action selector="OkButton_TouchUpInside:" destination="210" eventType="touchUpInside" id="264"/>
@@ -491,29 +477,29 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="255">
                                 <rect key="frame" x="173" y="518" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="344"/>
-                                    <constraint firstAttribute="width" constant="22" id="345"/>
-                                </constraints>
                                 <state key="normal" backgroundImage="Cancel.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="344"/>
-                                        <exclude reference="345"/>
-                                    </mask>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="212" y="522" width="26" height="26"/>
                                     <mask key="constraints">
-                                        <include reference="344"/>
-                                        <include reference="345"/>
+                                        <include reference="971"/>
+                                        <include reference="972"/>
                                     </mask>
-                                    <rect key="frame" x="212" y="521" width="22" height="22"/>
                                 </variation>
                                 <connections>
                                     <action selector="CancelButton_TouchUpInside:" destination="210" eventType="touchUpInside" id="356"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="971" firstItem="255" firstAttribute="height" constant="26"/>
+                                    <constraint id="972" firstItem="255" firstAttribute="width" constant="26"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="971"/>
+                                        <exclude reference="972"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="267">
                                 <rect key="frame" x="135" y="81" width="97" height="30"/>
@@ -674,10 +660,8 @@
                             <constraint firstItem="267" firstAttribute="top" secondItem="207" secondAttribute="bottom" constant="62" id="300"/>
                             <constraint firstItem="268" firstAttribute="top" secondItem="207" secondAttribute="bottom" constant="127" id="301"/>
                             <constraint firstItem="269" firstAttribute="top" secondItem="207" secondAttribute="bottom" constant="190" id="302"/>
-                            <constraint firstItem="255" firstAttribute="centerX" secondItem="211" secondAttribute="centerX" constant="63" id="346"/>
-                            <constraint firstAttribute="bottom" secondItem="255" secondAttribute="bottom" constant="25" id="347"/>
-                            <constraint firstAttribute="centerX" secondItem="254" secondAttribute="centerX" constant="58" id="350"/>
-                            <constraint firstAttribute="bottom" secondItem="254" secondAttribute="bottom" constant="20" id="351"/>
+                            <constraint id="973" firstItem="211" firstAttribute="trailing" secondItem="255" secondAttribute="trailing" constant="82"/>
+                            <constraint id="974" firstItem="211" firstAttribute="bottom" secondItem="255" secondAttribute="bottom" constant="20"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -709,10 +693,8 @@
                                 <exclude reference="278"/>
                                 <exclude reference="299"/>
                                 <exclude reference="302"/>
-                                <exclude reference="350"/>
-                                <exclude reference="351"/>
-                                <exclude reference="346"/>
-                                <exclude reference="347"/>
+                                <exclude reference="973"/>
+                                <exclude reference="974"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -745,10 +727,8 @@
                                 <include reference="278"/>
                                 <include reference="299"/>
                                 <include reference="302"/>
-                                <include reference="350"/>
-                                <include reference="351"/>
-                                <include reference="346"/>
-                                <include reference="347"/>
+                                <include reference="973"/>
+                                <include reference="974"/>
                             </mask>
                         </variation>
                     </view>
@@ -804,29 +784,29 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="455">
                                 <rect key="frame" x="227" y="518" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="460"/>
-                                    <constraint firstAttribute="width" constant="24" id="461"/>
-                                </constraints>
                                 <state key="normal" title="Button" backgroundImage="Cancel.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="460"/>
-                                        <exclude reference="461"/>
-                                    </mask>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="235" y="504" width="26" height="26"/>
                                     <mask key="constraints">
-                                        <include reference="460"/>
-                                        <include reference="461"/>
+                                        <include reference="983"/>
+                                        <include reference="984"/>
                                     </mask>
-                                    <rect key="frame" x="235" y="504" width="24" height="24"/>
                                 </variation>
                                 <connections>
                                     <action selector="CancelButton_TouchUpInside:" destination="449" eventType="touchUpInside" id="482"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="983" firstItem="455" firstAttribute="height" constant="26"/>
+                                    <constraint id="984" firstItem="455" firstAttribute="width" constant="26"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="983"/>
+                                        <exclude reference="984"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="494">
                                 <rect key="frame" x="38" y="501" width="46" height="30"/>
@@ -860,10 +840,10 @@
                             <constraint firstItem="453" firstAttribute="bottom" secondItem="450" secondAttribute="bottom" id="470"/>
                             <constraint firstItem="454" firstAttribute="centerX" secondItem="453" secondAttribute="centerX" id="471"/>
                             <constraint firstItem="453" firstAttribute="bottom" secondItem="454" secondAttribute="bottom" constant="20" id="473"/>
-                            <constraint firstItem="453" firstAttribute="trailing" secondItem="455" secondAttribute="trailing" constant="61" id="474"/>
-                            <constraint firstItem="453" firstAttribute="bottom" secondItem="455" secondAttribute="bottom" constant="40" id="475"/>
                             <constraint firstItem="453" firstAttribute="bottom" secondItem="494" secondAttribute="bottom" constant="35" id="533"/>
                             <constraint firstItem="494" firstAttribute="leading" secondItem="453" secondAttribute="leading" constant="38" id="534"/>
+                            <constraint id="985" firstItem="453" firstAttribute="trailing" secondItem="455" secondAttribute="trailing" constant="59"/>
+                            <constraint id="986" firstItem="453" firstAttribute="bottom" secondItem="455" secondAttribute="bottom" constant="38"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -878,11 +858,11 @@
                                 <exclude reference="469"/>
                                 <exclude reference="470"/>
                                 <exclude reference="473"/>
-                                <exclude reference="474"/>
-                                <exclude reference="475"/>
                                 <exclude reference="533"/>
                                 <exclude reference="534"/>
                                 <exclude reference="471"/>
+                                <exclude reference="985"/>
+                                <exclude reference="986"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -898,11 +878,11 @@
                                 <include reference="469"/>
                                 <include reference="470"/>
                                 <include reference="473"/>
-                                <include reference="474"/>
-                                <include reference="475"/>
                                 <include reference="533"/>
                                 <include reference="534"/>
                                 <include reference="471"/>
+                                <include reference="985"/>
+                                <include reference="986"/>
                             </mask>
                         </variation>
                     </view>
@@ -1080,67 +1060,55 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="732">
                                 <rect key="frame" x="72" y="518" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="733"/>
-                                    <constraint firstAttribute="width" constant="32" id="734"/>
-                                    <constraint firstAttribute="height" constant="40" id="742"/>
-                                    <constraint firstAttribute="width" constant="40" id="743"/>
-                                </constraints>
                                 <state key="normal" backgroundImage="Checkmark.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="67" y="508" width="48" height="48"/>
                                     <mask key="constraints">
-                                        <exclude reference="733"/>
-                                        <exclude reference="734"/>
-                                        <exclude reference="742"/>
-                                        <exclude reference="743"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="67" y="508" width="40" height="40"/>
-                                    <mask key="constraints">
-                                        <include reference="733"/>
-                                        <include reference="734"/>
-                                        <include reference="742"/>
-                                        <include reference="743"/>
+                                        <include reference="975"/>
+                                        <include reference="976"/>
                                     </mask>
                                 </variation>
                                 <connections>
                                     <action selector="OkButton_TouchUpInside:" destination="676" id="761" eventType="touchUpInside"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="975" firstItem="732" firstAttribute="height" constant="48"/>
+                                    <constraint id="976" firstItem="732" firstAttribute="width" constant="48"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="975"/>
+                                        <exclude reference="976"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="737">
                                 <rect key="frame" x="173" y="518" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="738"/>
-                                    <constraint firstAttribute="width" constant="22" id="739"/>
-                                    <constraint firstAttribute="height" constant="26" id="747"/>
-                                    <constraint firstAttribute="width" constant="26" id="748"/>
-                                </constraints>
                                 <state key="normal" backgroundImage="Cancel.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="738"/>
-                                        <exclude reference="739"/>
-                                        <exclude reference="747"/>
-                                        <exclude reference="748"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <rect key="frame" x="203" y="515" width="26" height="26"/>
                                     <mask key="constraints">
-                                        <include reference="738"/>
-                                        <include reference="739"/>
-                                        <include reference="747"/>
-                                        <include reference="748"/>
+                                        <include reference="979"/>
+                                        <include reference="980"/>
                                     </mask>
                                 </variation>
                                 <connections>
                                     <action selector="CancelButton_TouchUpInside:" destination="676" id="762" eventType="touchUpInside"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="979" firstItem="737" firstAttribute="height" constant="26"/>
+                                    <constraint id="980" firstItem="737" firstAttribute="width" constant="26"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="979"/>
+                                        <exclude reference="980"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" id="756" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="13" y="334" width="42" height="21"/>
@@ -1191,12 +1159,12 @@
                             <constraint firstItem="691" firstAttribute="top" secondItem="690" secondAttribute="centerY" constant="35" id="727"/>
                             <constraint firstItem="689" firstAttribute="leading" secondItem="692" secondAttribute="trailing" constant="17" id="730"/>
                             <constraint firstItem="692" firstAttribute="top" secondItem="691" secondAttribute="centerY" constant="37" id="731"/>
-                            <constraint firstAttribute="centerX" secondItem="732" secondAttribute="centerX" constant="73" id="744"/>
-                            <constraint firstAttribute="bottom" secondItem="732" secondAttribute="bottom" constant="20" id="745"/>
-                            <constraint firstItem="737" firstAttribute="centerX" secondItem="677" secondAttribute="centerX" constant="56" id="746"/>
-                            <constraint firstAttribute="bottom" secondItem="737" secondAttribute="bottom" constant="27" id="749"/>
                             <constraint id="791" firstItem="756" firstAttribute="top" secondItem="680" secondAttribute="bottom" constant="6"/>
                             <constraint id="792" firstItem="756" firstAttribute="leading" secondItem="677" secondAttribute="leading" constant="13"/>
+                            <constraint id="977" firstItem="732" firstAttribute="leading" secondItem="677" secondAttribute="leading" constant="67"/>
+                            <constraint id="978" firstItem="677" firstAttribute="bottom" secondItem="732" secondAttribute="bottom" constant="12"/>
+                            <constraint id="981" firstItem="677" firstAttribute="trailing" secondItem="737" secondAttribute="trailing" constant="91"/>
+                            <constraint id="982" firstItem="677" firstAttribute="bottom" secondItem="737" secondAttribute="bottom" constant="27"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -1234,12 +1202,12 @@
                                 <exclude reference="719"/>
                                 <exclude reference="720"/>
                                 <exclude reference="730"/>
-                                <exclude reference="744"/>
-                                <exclude reference="745"/>
-                                <exclude reference="746"/>
-                                <exclude reference="749"/>
                                 <exclude reference="791"/>
                                 <exclude reference="792"/>
+                                <exclude reference="977"/>
+                                <exclude reference="978"/>
+                                <exclude reference="981"/>
+                                <exclude reference="982"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1278,12 +1246,12 @@
                                 <include reference="719"/>
                                 <include reference="720"/>
                                 <include reference="730"/>
-                                <include reference="744"/>
-                                <include reference="745"/>
-                                <include reference="746"/>
-                                <include reference="749"/>
                                 <include reference="791"/>
                                 <include reference="792"/>
+                                <include reference="977"/>
+                                <include reference="978"/>
+                                <include reference="981"/>
+                                <include reference="982"/>
                             </mask>
                         </variation>
                     </view>
@@ -1322,6 +1290,7 @@
         <image name="FlashOn.png" width="128" height="128"/>
         <image name="FlashButton.png" width="108" height="114"/>
         <image name="NoFlashButton.png" width="64" height="64"/>
+        <image name="email2.png" width="128" height="128"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedScreenMetrics key="destination" type="retina4"/>

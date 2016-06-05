@@ -16,10 +16,10 @@ namespace SnagScript
 		public double fHeightWidthRatio;
 
 
-		private double TopOffset;
-		private double LeftOffset;
-		private double WidthShrink;
-		private double HeightShrink;
+//		private double TopOffset;
+//		private double LeftOffset;
+//		private double WidthShrink;
+//		private double HeightShrink;
 
 		private bool bScaleWidth;
 		private bool bScaleHeight;
@@ -33,7 +33,7 @@ namespace SnagScript
 		AVCaptureVideoPreviewLayer videoPreviewLayer;
 
 		private CALayer CaptureLayer;
-		private CGRect ImagePositionInWindow;
+//		private CGRect ImagePositionInWindow;
 		private CGPoint translation;
 		private CGSize scale;
 		private CGSize CropSize;
@@ -245,7 +245,7 @@ namespace SnagScript
 
 			var rectCapture = new CGRect (0, 0, LiveCameraStream.Bounds.Width, LiveCameraStream.Bounds.Width * fHeightWidthRatio);
 			rectCapture.Offset (new CGPoint (0, (LiveCameraStream.Bounds.Height - rectCapture.Height) / 2.0));
-			ImagePositionInWindow = rectCapture;
+			//ImagePositionInWindow = rectCapture;
 
 			/* Crop the image
 			 * -------------- */
