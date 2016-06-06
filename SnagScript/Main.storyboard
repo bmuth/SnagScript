@@ -1291,6 +1291,7 @@
         <image name="FlashButton.png" width="108" height="114"/>
         <image name="NoFlashButton.png" width="64" height="64"/>
         <image name="email2.png" width="128" height="128"/>
+        <image name="PrescriptionWelcome.png" width="600" height="1100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedScreenMetrics key="destination" type="retina4"/>
