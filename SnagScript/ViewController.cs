@@ -18,6 +18,10 @@ namespace SnagScript
 		public float BrightnessValue;
 		public float ContrastValue;
 		public float SaturationValue;
+		public double SmallCropSizeHeight;
+		public double SmallCropSizeWidth;
+		public double LargeCropSizeHeight;
+		public double LargeCropSizeWidth;
 	}
 
 	public partial class ViewController : UIViewController
@@ -86,6 +90,7 @@ namespace SnagScript
 			var storyboard = this.Storyboard;
 			var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
 			p.fHeightWidthRatio = fHeightWidthRatioPatient;
+			p.CropSize = new CGSize (_OptionData.SmallCropSizeWidth, _OptionData.SmallCropSizeHeight);
 
 			if (imagePatient.Image != null)
 			{
@@ -94,6 +99,12 @@ namespace SnagScript
 			else
 			{
 				p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+				p.CropSizeUpdated += (CGSize sz) => {
+					_OptionData.SmallCropSizeWidth = sz.Width;
+					_OptionData.SmallCropSizeHeight = sz.Height;
+					SavePersistedData ();
+				};
 
 				p.PhotoUpdated += (UIImage image) => {
 					{
@@ -121,6 +132,7 @@ namespace SnagScript
 			var storyboard = this.Storyboard;
 			var p = (SnapshotViewController) storyboard.InstantiateViewController ("SnapshotViewController");
 			p.fHeightWidthRatio = fHeightWidthRatioMeds;
+			p.CropSize = new CGSize (_OptionData.LargeCropSizeWidth, _OptionData.LargeCropSizeHeight);
 
 			if (imageMeds.Image != null)
 			{
@@ -130,6 +142,12 @@ namespace SnagScript
 			{
 				p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
+				p.CropSizeUpdated += (CGSize sz) => {
+					_OptionData.LargeCropSizeWidth = sz.Width;
+					_OptionData.LargeCropSizeHeight = sz.Height;
+					SavePersistedData ();
+				};
+					
 				p.PhotoUpdated += (UIImage image) => {
 					{
 						imageMedsOriginal = image;
