@@ -98,7 +98,7 @@ namespace SnagScript
 			}
 			else
 			{
-				p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+				//p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
 				p.CropSizeUpdated += (CGSize sz) => {
 					_OptionData.SmallCropSizeWidth = sz.Width;
@@ -117,6 +117,9 @@ namespace SnagScript
 					}
 				};
 
+//				imagePatient.RemoveGestureRecognizer (SingleTapPatientImageGesture);
+//				imageMeds.RemoveGestureRecognizer (SingleTapMedsImageGesture);
+				//var p2 = (SnapshotViewController2) storyboard.InstantiateViewController ("SnapshotViewController2");
 				this.PresentViewController (p, true, null);
 			}
 		}
@@ -140,7 +143,7 @@ namespace SnagScript
 			}
 			else
 			{
-				p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+				//p.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
 
 				p.CropSizeUpdated += (CGSize sz) => {
 					_OptionData.LargeCropSizeWidth = sz.Width;

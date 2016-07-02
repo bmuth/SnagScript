@@ -62,8 +62,6 @@ namespace SnagScript
 
 			PinchGesture = new UIPinchGestureRecognizer (this.OnPinchGesture);
 			this.View.AddGestureRecognizer (PinchGesture);
-
-
 		}
 
 		/************************************************
@@ -137,7 +135,7 @@ namespace SnagScript
 
 //				Console.WriteLine ("no of touches {0}", pinch.NumberOfTouches);
 				for (int i = 0; i < pinch.NumberOfTouches; i++) {
-					CGPoint p = pinch.LocationOfTouch (i, LiveCameraStream);
+//					CGPoint p = pinch.LocationOfTouch (i, LiveCameraStream);
 //					Console.WriteLine ("touch={0} {1}", p.X, p.Y);
 				}
 				if (pinch.NumberOfTouches >= 2) {
