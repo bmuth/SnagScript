@@ -287,10 +287,41 @@ namespace SnagScript
 		{
 			base.ViewDidLoad ();
 
+			/* set up the toolbar
+			 * ------------------ */
+
+			UIBarButtonItem flexibleWidth = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
+
+			UIBarButtonItem shareButton = new UIBarButtonItem (UIBarButtonSystemItem.Action, (o, e) => {
+				new UIAlertView ("Click", "share clicked", null, "OK", null).Show ();
+			});
+
+			UIButton emailButton = new UIButton (UIButtonType.Custom);
+			emailButton.Frame = new CGRect (0, 0, 48, 48);
+			emailButton.SetImage (new UIImage ("email2.png"), UIControlState.Normal);
+			emailButton.TouchUpInside += EmailButton_TouchUpInside; 
+
+			UIBarButtonItem email = new UIBarButtonItem (emailButton);
+
+			UIButton settingsButton = new UIButton (UIButtonType.Custom);
+			settingsButton.Frame = new CGRect (0, 0, 36, 36);
+			settingsButton.SetImage (new UIImage ("options.png"), UIControlState.Normal);
+			settingsButton.TouchUpInside += SettingsButton_TouchUpInside; 
+
+			UIBarButtonItem settings = new UIBarButtonItem (settingsButton);
+
+			MyToolbar.SetItems (new UIBarButtonItem[] {flexibleWidth, shareButton, flexibleWidth, email, flexibleWidth, settings, flexibleWidth}, false);
+
+			/* Load and display persisted data
+			 * ------------------------------- */
+
 			LoadPersistedData ();
 
 			labDoctorNo.Text = _OptionData.CollegeNumber;
 			labDoctorName.Text = _OptionData.DoctorName;
+
+			/* Wire up gestures
+			 * ---------------- */
 
 			WireUpPatientTap ();
 			WireUpMedsTap ();	
@@ -493,7 +524,7 @@ namespace SnagScript
 	 	* 
 	 	* *****************************************/
 
-		partial void ButtonOptions_TouchUpInside (UIButton sender)
+		void SettingsButton_TouchUpInside (object sender, EventArgs e)
 		{
 			var storyboard = this.Storyboard;
 			var p = (OptionViewController)storyboard.InstantiateViewController ("OptionViewController");
@@ -534,7 +565,7 @@ namespace SnagScript
 		 * 
 		 * ***************************************/
 
-		partial void ButtonEmail_TouchUpInside (UIButton sender)
+		void EmailButton_TouchUpInside (object sender, EventArgs e)
 		{
 			if (imageMeds.Image == null || imagePatient.Image == null)
 			{
@@ -820,6 +851,35 @@ namespace SnagScript
 					return _scaleUpFactor;
 				}
 			}
+		}
+
+		/***********************************************
+		 * 
+		 * Print
+		 * 
+		 * ********************************************/
+
+		void Print ()
+		{
+			var printInfo = UIPrintInfo.PrintInfo;
+			printInfo.OutputType = UIPrintInfoOutputType.General;
+			printInfo.JobName = "My first Print Job";
+
+			var textFormatter = new UISimpleTextPrintFormatter ("Once upon a time...") {
+				StartPage = 0,
+				ContentInsets = new UIEdgeInsets (72, 72, 72, 72),
+				MaximumContentWidth = 6 * 72,
+			};
+
+			var printer = UIPrintInteractionController.SharedPrintController;
+			printer.PrintInfo = printInfo;
+			printer.PrintFormatter = textFormatter;
+			printer.ShowsPageRange = true;
+			printer.Present (true, (handler, completed, err) => {
+				if (!completed && err != null) {
+					Console.WriteLine ("error");
+				}
+			});
 		}
 
 	}

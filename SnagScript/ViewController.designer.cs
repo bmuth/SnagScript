@@ -16,14 +16,6 @@ namespace SnagScript
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton buttonEmail { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton buttonOptions { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
 		UIImageView imageMeds { get; set; }
 
 		[Outlet]
@@ -64,26 +56,14 @@ namespace SnagScript
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
+		UIToolbar MyToolbar { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
 		UIImageView PatientCalloutView { get; set; }
-
-		[Action ("ButtonEmail_TouchUpInside:")]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		partial void ButtonEmail_TouchUpInside (UIButton sender);
-
-		[Action ("ButtonOptions_TouchUpInside:")]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		partial void ButtonOptions_TouchUpInside (UIButton sender);
 
 		void ReleaseDesignerOutlets ()
 		{
-			if (buttonEmail != null) {
-				buttonEmail.Dispose ();
-				buttonEmail = null;
-			}
-			if (buttonOptions != null) {
-				buttonOptions.Dispose ();
-				buttonOptions = null;
-			}
 			if (imageMeds != null) {
 				imageMeds.Dispose ();
 				imageMeds = null;
@@ -123,6 +103,10 @@ namespace SnagScript
 			if (MedsCalloutView != null) {
 				MedsCalloutView.Dispose ();
 				MedsCalloutView = null;
+			}
+			if (MyToolbar != null) {
+				MyToolbar.Dispose ();
+				MyToolbar = null;
 			}
 			if (PatientCalloutView != null) {
 				PatientCalloutView.Dispose ();
