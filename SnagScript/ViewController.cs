@@ -109,10 +109,13 @@ namespace SnagScript
 				p.PhotoUpdated += (UIImage image) => {
 					{
 						imagePatientOriginal = image;
-						imagePatient.Image = image;
+						imagePatientEnhanced = ApplyContrast (image);
+						imagePatient.Image = imagePatientEnhanced;
+
 						labTipPatientID.Hidden = true;
 						bIfContrastPatient = false;
-						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (UIColor.Black);
+						PatientCalloutView.Image = PatientIDCallout.ImageOfPatientCallout (contrastBlue);
+						bIfContrastPatient = true;
 //						Console.WriteLine ("Contrast false");
 					}
 				};
@@ -154,11 +157,13 @@ namespace SnagScript
 				p.PhotoUpdated += (UIImage image) => {
 					{
 						imageMedsOriginal = image;
-						imageMeds.Image = image;
+						imageMedsEnhanced = ApplyContrast (image);
+						imageMeds.Image = imageMedsEnhanced;
+
 						labTipMed.Hidden = true;
 						bIfContrastMeds = false;
-						MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (UIColor.Black);
-//						Console.WriteLine ("Contrast false");
+						MedsCalloutView.Image = MedsCallout.ImageOfMedsCallout (contrastBlue);
+						bIfContrastMeds = true;
 					}
 				};
 
