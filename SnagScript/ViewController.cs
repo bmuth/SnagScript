@@ -292,9 +292,7 @@ namespace SnagScript
 
 			UIBarButtonItem flexibleWidth = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
 
-			UIBarButtonItem shareButton = new UIBarButtonItem (UIBarButtonSystemItem.Action, (o, e) => {
-				new UIAlertView ("Click", "share clicked", null, "OK", null).Show ();
-			});
+			UIBarButtonItem shareButton = new UIBarButtonItem (UIBarButtonSystemItem.Action, Print);
 
 			UIButton emailButton = new UIButton (UIButtonType.Custom);
 			emailButton.Frame = new CGRect (0, 0, 48, 48);
@@ -319,6 +317,8 @@ namespace SnagScript
 
 			labDoctorNo.Text = _OptionData.CollegeNumber;
 			labDoctorName.Text = _OptionData.DoctorName;
+
+			labDate.Text = DateTime.Now.ToString ("MMMM dd, yyyy");
 
 			/* Wire up gestures
 			 * ---------------- */
@@ -573,206 +573,7 @@ namespace SnagScript
 				return;
 			}
 
-			UIImage script = UIImage.FromFile ("PrescriptionTemplate3.png");
-			CGSize sz = script.Size;
-
-			var colorSpace = CoreGraphics.CGColorSpace.CreateDeviceRGB ();
-
-			/* create a bitmap that roughly is the shape of PrescriptionTemplate3.png
-			 * ----------------------------------------------------------------------
-			 * but has the same aspect ratio of imageViewScript */
-
-
-			nint BitmapWidth = (nint) (imageviewScript.Bounds.Width * ScaleUpFactor);
-			nint BitmapHeight = (nint) (imageviewScript.Bounds.Height * ScaleUpFactor);
-
-			var context = new CGBitmapContext(null, BitmapWidth, BitmapHeight, 8, 0, colorSpace, CGImageAlphaInfo.PremultipliedFirst);
-
-
-			/*	UIImage transformedImage; //Your new image
-			UIGraphics.BeginImageContext (imagePatient.Frame.Size);
-			imagePatientView.DrawViewHierarchy (imagePatient.Frame, true);
-			transformedImage = UIGraphics.GetImageFromCurrentImageContext ();
-			UIGraphics.EndImageContext ();*/
-
-			/* Figure out the offset
-			* ---------------------*/
-
-			nfloat fLeft = (nfloat) ((BitmapWidth - sz.Width) / 2.0);
-			nfloat fBottom = (nfloat) ((BitmapHeight - sz.Height) / 2.0);
-
-			context.DrawImage (new CGRect (fLeft, fBottom, sz.Width, sz.Height), script.CGImage);
-
-			// debug - fill imagePatient
-
-/*			{
-				CGRect rectangle = MapRect (imagePatient.Frame);
-				context.SetFillColor (UIColor.Red.CGColor);
-				context.SetStrokeColor (UIColor.Blue.CGColor);
-				context.FillRect (rectangle);
-				context.StrokeRect (rectangle);
-
-				rectangle = MapRect (imageMeds.Frame);
-				context.FillRect (rectangle);
-
-				context.StrokeRectWithWidth (rectangle, 3);
-			}*/
-
-			/* Now draw patient id
-			 * ------------------- */
-
-			{
-				UIImage patient = imagePatient.Image;
-
-				nfloat ScaledPatientHeight;
-				nfloat ScaledPatientWidth;
-
-				if (patient.Size.Width / patient.Size.Height > imagePatient.Bounds.Width / imagePatient.Bounds.Height)
-				{
-					/* must be some space above and below image
-					 * ---------------------------------------- */
-
-					ScaledPatientHeight = imagePatient.Bounds.Width / patient.Size.Width * patient.Size.Height;
-					ScaledPatientWidth = imagePatient.Bounds.Width;
-				}
-				else
-				{
-					/* must be space left and right of image
-					 * ------------------------------------- */
-
-					ScaledPatientHeight = imagePatient.Bounds.Height;
-					ScaledPatientWidth = imagePatient.Bounds.Height / patient.Size.Height * patient.Size.Width;
-				}
-
-				nfloat FromLeft = imagePatient.Frame.Left;
-				FromLeft += (nfloat) ((imagePatient.Bounds.Width - ScaledPatientWidth) / 2.0);
-
-
-				nfloat FromTop = imagePatient.Frame.Top;
-				FromTop += (nfloat) ((imagePatient.Bounds.Height - ScaledPatientHeight) / 2.0);
-
-				CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledPatientWidth, ScaledPatientHeight));
-
-/*				context.SetFillColor (UIColor.Yellow.CGColor);
-				context.SetStrokeColor (UIColor.Black.CGColor);
-				context.FillRect (r);
-				context.StrokeRectWithWidth (r, 3);*/
-
-				context.DrawImage (new CGRect (r.Left, r.Top, ScaledPatientWidth * ScaleUpFactor, ScaledPatientHeight * ScaleUpFactor), patient.CGImage);
-			}
-			{
-				UIImage meds = imageMeds.Image;
-
-				nfloat ScaledMedsHeight;
-				nfloat ScaledMedsWidth;
-
-				if (meds.Size.Width / meds.Size.Height > imageMeds.Bounds.Width / imageMeds.Bounds.Height)
-				{
-					/* must be some space above and below image
-					 * ---------------------------------------- */
-
-					ScaledMedsHeight = imageMeds.Bounds.Width / meds.Size.Width * meds.Size.Height;
-					ScaledMedsWidth = imageMeds.Bounds.Width;
-				}
-				else
-				{
-					/* must be space left and right of image
-					 * ------------------------------------- */
-
-					ScaledMedsHeight = imageMeds.Bounds.Height;
-					ScaledMedsWidth = imageMeds.Bounds.Height / meds.Size.Height * meds.Size.Width;
-				}
-
-				nfloat FromLeft = imageMeds.Frame.Left;
-				FromLeft += (nfloat) ((imageMeds.Bounds.Width - ScaledMedsWidth) / 2.0);
-
-				nfloat FromTop = imageMeds.Frame.Top;
-				FromTop += (nfloat) ((imageMeds.Bounds.Height - ScaledMedsHeight) / 2.0);
-
-				CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledMedsWidth, ScaledMedsHeight));
-
-/*				context.SetFillColor (UIColor.Yellow.CGColor);
-				context.SetStrokeColor (UIColor.Black.CGColor);
-				context.FillRect (r);
-				context.StrokeRectWithWidth (r, 3);*/
-
-				context.DrawImage (new CGRect (r.Left, r.Top, ScaledMedsWidth * ScaleUpFactor, ScaledMedsHeight * ScaleUpFactor), meds.CGImage);
-			}
-
-			context.SelectFont ("Helvetica", 50, CGTextEncoding.MacRoman);
-			context.SetTextDrawingMode (CGTextDrawingMode.FillStroke);
-			context.SetStrokeColor (UIColor.Black.CGColor);
-			context.SetFillColor (UIColor.Black.CGColor);
-
-			{
-				CGRect r = labSignature.Frame;
-				CGPoint p = MapPoint (r);
-				context.ShowTextAtPoint (p.X, p.Y, labSignature.Text);
-			}
-
-			{
-				CGRect r = labDoctorName.Frame;
-				CGPoint p = MapPoint (r);
-
-
-				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
-				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
-				context.ShowTextAtPoint (p.X, p.Y, labDoctorName.Text);
-
-				//Then get the position of the text and set the mode back to visible:            
-				CGPoint pt = context.TextPosition;      
-
-				nfloat FromLeft = labDoctorName.Frame.Left + labDoctorName.Frame.Width - imageviewScript.Frame.Left;
-				FromLeft *= ScaleUpFactor;
-
-				//Draw at new position
-				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDoctorName.Text);
-			}
-
-			{
-				CGRect r = labDoctorNo.Frame;
-				CGPoint p = MapPoint (r);
-
-				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
-				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
-				context.ShowTextAtPoint (p.X, p.Y, labDoctorNo.Text);
-
-				//Then get the position of the text and set the mode back to visible:            
-				CGPoint pt = context.TextPosition;      
-
-				nfloat FromLeft = labDoctorNo.Frame.Left + labDoctorNo.Frame.Width - imageviewScript.Frame.Left;
-				FromLeft *= ScaleUpFactor;
-
-				//Draw at new position
-				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDoctorNo.Text);
-			}
-
-			{
-				CGPoint p = MapPoint (labDate.Frame);
-
-				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
-				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
-				context.ShowTextAtPoint (p.X, p.Y, labDate.Text);
-
-				//Then get the position of the text and set the mode back to visible:            
-				CGPoint pt = context.TextPosition;      
-
-				nfloat FromLeft = labDate.Frame.Left + labDate.Frame.Width - imageviewScript.Frame.Left;
-				FromLeft *= ScaleUpFactor;
-
-				//Draw at new position
-				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
-				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDate.Text);
-			}
-
-			var image = new UIImage(context.ToImage(), 1.0f, UIImageOrientation.Up);
-
-			context.Dispose();
-			colorSpace.Dispose();
-			script.Dispose ();
-
+			UIImage image = CreateOutputImage ();
 
 			// Create an email
 			var _mailController = new MFMailComposeViewController();
@@ -853,28 +654,266 @@ namespace SnagScript
 			}
 		}
 
+		/********************************************************
+		 * 
+		 * CreateOutputImage2
+		 * 
+		 * *****************************************************/
+
+		UIImage CreateOutputImage2 ()
+		{
+			UIImage script = UIImage.FromFile ("PrescriptionTemplate3.png");
+			CGSize sz = script.Size;
+
+			UIGraphics.BeginImageContextWithOptions (sz, false, ScaleUpFactor);
+
+			var context = UIGraphics.GetCurrentContext ();
+			context.InterpolationQuality =  CGInterpolationQuality.High;
+
+			// Draw each view into context
+//			for curView in allViews {
+//						curView.drawViewHierarchyInRect(curView.frame, afterScreenUpdates: false)
+//					}
+			imageviewScript.DrawViewHierarchy (imageviewScript.Frame, false);
+			imagePatient.DrawViewHierarchy (imagePatient.Frame, false);
+			imageMeds.DrawViewHierarchy (imageMeds.Frame, false);
+
+						// Extract image & end context
+			var image = UIGraphics.GetImageFromCurrentImageContext ();
+			UIGraphics.EndImageContext ();
+
+			return image;
+		}
+
+		/**********************************************
+		 * 
+		 * CreateOutputImage
+		 * 
+		 * *******************************************/
+
+		UIImage CreateOutputImage ()
+		{
+
+
+			UIImage script = UIImage.FromFile ("PrescriptionTemplate3.png");
+			CGSize sz = script.Size;
+
+			var colorSpace = CoreGraphics.CGColorSpace.CreateDeviceRGB ();
+
+			/* create a bitmap that roughly is the shape of PrescriptionTemplate3.png
+			 * ----------------------------------------------------------------------
+			 * but has the same aspect ratio of imageViewScript */
+
+
+			nint BitmapWidth = (nint) (imageviewScript.Bounds.Width * ScaleUpFactor);
+			nint BitmapHeight = (nint) (imageviewScript.Bounds.Height * ScaleUpFactor);
+
+			var context = new CGBitmapContext(null, BitmapWidth, BitmapHeight, 8, 0, colorSpace, CGImageAlphaInfo.PremultipliedFirst);
+
+
+			/*	UIImage transformedImage; //Your new image
+			UIGraphics.BeginImageContext (imagePatient.Frame.Size);
+			imagePatientView.DrawViewHierarchy (imagePatient.Frame, true);
+			transformedImage = UIGraphics.GetImageFromCurrentImageContext ();
+			UIGraphics.EndImageContext ();*/
+
+			/* Figure out the offset
+			* ---------------------*/
+
+			nfloat fLeft = (nfloat) ((BitmapWidth - sz.Width) / 2.0);
+			nfloat fBottom = (nfloat) ((BitmapHeight - sz.Height) / 2.0);
+
+			context.DrawImage (new CGRect (fLeft, fBottom, sz.Width, sz.Height), script.CGImage);
+
+			// debug - fill imagePatient
+
+			/*			{
+				CGRect rectangle = MapRect (imagePatient.Frame);
+				context.SetFillColor (UIColor.Red.CGColor);
+				context.SetStrokeColor (UIColor.Blue.CGColor);
+				context.FillRect (rectangle);
+				context.StrokeRect (rectangle);
+
+				rectangle = MapRect (imageMeds.Frame);
+				context.FillRect (rectangle);
+
+				context.StrokeRectWithWidth (rectangle, 3);
+			}*/
+
+			/* Now draw patient id
+			* ------------------- */
+
+			{
+				UIImage patient = imagePatient.Image;
+
+				if (patient != null) {
+					nfloat ScaledPatientHeight;
+					nfloat ScaledPatientWidth;
+
+					if (patient.Size.Width / patient.Size.Height > imagePatient.Bounds.Width / imagePatient.Bounds.Height) {
+						/* must be some space above and below image
+					 * ---------------------------------------- */
+
+						ScaledPatientHeight = imagePatient.Bounds.Width / patient.Size.Width * patient.Size.Height;
+						ScaledPatientWidth = imagePatient.Bounds.Width;
+					} else {
+						/* must be space left and right of image
+					 * ------------------------------------- */
+
+						ScaledPatientHeight = imagePatient.Bounds.Height;
+						ScaledPatientWidth = imagePatient.Bounds.Height / patient.Size.Height * patient.Size.Width;
+					}
+
+					nfloat FromLeft = imagePatient.Frame.Left;
+					FromLeft += (nfloat)((imagePatient.Bounds.Width - ScaledPatientWidth) / 2.0);
+
+
+					nfloat FromTop = imagePatient.Frame.Top;
+					FromTop += (nfloat)((imagePatient.Bounds.Height - ScaledPatientHeight) / 2.0);
+
+					CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledPatientWidth, ScaledPatientHeight));
+
+					/*				context.SetFillColor (UIColor.Yellow.CGColor);
+				context.SetStrokeColor (UIColor.Black.CGColor);
+				context.FillRect (r);
+				context.StrokeRectWithWidth (r, 3);*/
+
+					context.DrawImage (new CGRect (r.Left, r.Top, ScaledPatientWidth * ScaleUpFactor, ScaledPatientHeight * ScaleUpFactor), patient.CGImage);
+				}
+			}
+			{
+				UIImage meds = imageMeds.Image;
+
+				if (meds != null) {
+					nfloat ScaledMedsHeight;
+					nfloat ScaledMedsWidth;
+
+					if (meds.Size.Width / meds.Size.Height > imageMeds.Bounds.Width / imageMeds.Bounds.Height) {
+						/* must be some space above and below image
+					 * ---------------------------------------- */
+
+						ScaledMedsHeight = imageMeds.Bounds.Width / meds.Size.Width * meds.Size.Height;
+						ScaledMedsWidth = imageMeds.Bounds.Width;
+					} else {
+						/* must be space left and right of image
+					 * ------------------------------------- */
+
+						ScaledMedsHeight = imageMeds.Bounds.Height;
+						ScaledMedsWidth = imageMeds.Bounds.Height / meds.Size.Height * meds.Size.Width;
+					}
+
+					nfloat FromLeft = imageMeds.Frame.Left;
+					FromLeft += (nfloat)((imageMeds.Bounds.Width - ScaledMedsWidth) / 2.0);
+
+					nfloat FromTop = imageMeds.Frame.Top;
+					FromTop += (nfloat)((imageMeds.Bounds.Height - ScaledMedsHeight) / 2.0);
+
+					CGRect r = MapRect (new CGRect (FromLeft, FromTop, ScaledMedsWidth, ScaledMedsHeight));
+
+					/*				context.SetFillColor (UIColor.Yellow.CGColor);
+				context.SetStrokeColor (UIColor.Black.CGColor);
+				context.FillRect (r);
+				context.StrokeRectWithWidth (r, 3);*/
+
+					context.DrawImage (new CGRect (r.Left, r.Top, ScaledMedsWidth * ScaleUpFactor, ScaledMedsHeight * ScaleUpFactor), meds.CGImage);
+				}
+			}
+
+			context.SelectFont ("Helvetica", 50, CGTextEncoding.MacRoman);
+			context.SetTextDrawingMode (CGTextDrawingMode.FillStroke);
+			context.SetStrokeColor (UIColor.Black.CGColor);
+			context.SetFillColor (UIColor.Black.CGColor);
+
+			{
+				CGRect r = labSignature.Frame;
+				CGPoint p = MapPoint (r);
+				context.ShowTextAtPoint (p.X, p.Y, labSignature.Text);
+			}
+
+			{
+				CGRect r = labDoctorName.Frame;
+				CGPoint p = MapPoint (r);
+
+
+				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
+				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
+				context.ShowTextAtPoint (p.X, p.Y, labDoctorName.Text);
+
+				//Then get the position of the text and set the mode back to visible:            
+				CGPoint pt = context.TextPosition;      
+
+				nfloat FromLeft = labDoctorName.Frame.Left + labDoctorName.Frame.Width - imageviewScript.Frame.Left;
+				FromLeft *= ScaleUpFactor;
+
+				//Draw at new position
+				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDoctorName.Text);
+			}
+
+			{
+				CGRect r = labDoctorNo.Frame;
+				CGPoint p = MapPoint (r);
+
+				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
+				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
+				context.ShowTextAtPoint (p.X, p.Y, labDoctorNo.Text);
+
+				//Then get the position of the text and set the mode back to visible:            
+				CGPoint pt = context.TextPosition;      
+
+				nfloat FromLeft = labDoctorNo.Frame.Left + labDoctorNo.Frame.Width - imageviewScript.Frame.Left;
+				FromLeft *= ScaleUpFactor;
+
+				//Draw at new position
+				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDoctorNo.Text);
+			}
+
+			{
+				CGPoint p = MapPoint (labDate.Frame);
+
+				//draw in invisible mode, get the size then subtract from width of rect to get left hand x of the text
+				context.SetTextDrawingMode(CGTextDrawingMode.Invisible);
+				context.ShowTextAtPoint (p.X, p.Y, labDate.Text);
+
+				//Then get the position of the text and set the mode back to visible:            
+				CGPoint pt = context.TextPosition;      
+
+				nfloat FromLeft = labDate.Frame.Left + labDate.Frame.Width - imageviewScript.Frame.Left;
+				FromLeft *= ScaleUpFactor;
+
+				//Draw at new position
+				context.SetTextDrawingMode(CGTextDrawingMode.Fill);
+				context.ShowTextAtPoint (p.X + (FromLeft - pt.X), p.Y, labDate.Text);
+			}
+
+			var image = new UIImage(context.ToImage(), 1.0f, UIImageOrientation.Up);
+
+			context.Dispose();
+			colorSpace.Dispose();
+			script.Dispose ();
+
+			return image;
+		}
 		/***********************************************
 		 * 
 		 * Print
 		 * 
 		 * ********************************************/
 
-		void Print ()
+		void Print (object sender, EventArgs e)
 		{
 			var printInfo = UIPrintInfo.PrintInfo;
 			printInfo.OutputType = UIPrintInfoOutputType.General;
-			printInfo.JobName = "My first Print Job";
+			printInfo.JobName = "Snagscript " + labDoctorName.Text + " " + DateTime.Now;
 
-			var textFormatter = new UISimpleTextPrintFormatter ("Once upon a time...") {
-				StartPage = 0,
-				ContentInsets = new UIEdgeInsets (72, 72, 72, 72),
-				MaximumContentWidth = 6 * 72,
-			};
+			var image = CreateOutputImage2 ();
 
 			var printer = UIPrintInteractionController.SharedPrintController;
 			printer.PrintInfo = printInfo;
-			printer.PrintFormatter = textFormatter;
-			printer.ShowsPageRange = true;
+			printer.PrintingItem = image;
+			printer.ShowsPageRange = false;
+			//printer.PrintFormatter.ContentInsets = new UIEdgeInsets ((nfloat) 72.0, (nfloat) 72.0, (nfloat) 72.0, (nfloat) 72.0); // 1 inch margins
 			printer.Present (true, (handler, completed, err) => {
 				if (!completed && err != null) {
 					Console.WriteLine ("error");
